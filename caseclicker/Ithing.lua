@@ -1,1 +1,0 @@
-print("MI HOY MINOY")
