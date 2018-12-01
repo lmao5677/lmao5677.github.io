@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<title>Stick Ranger Modded</title>
+
+		<style>
+
+			body {
+				background-color: powderblue;
+				-MS-INTERPOLATION-MODE: nearest-neighbor;
+				IMAGE-RENDERING: -webkit-crisp-edges;
+				IMAGE-RENDERING: -moz-crisp-edges;
+				IMAGE-RENDERING: pixelated;
+			}
+
+			div, canvas, p {
+				margin: auto;
+				display: block;
+			}
+
+		</style>
+	</head>
+
+	<body background="data/main_bg.png" style="font-family:MS Gothic; font-size:9pt;">
+
+		<div style="width: 480px;">
+			<script type="text/javascript">
+			function hu_tag2(id,lg){
+				var w='',ck='1';
+				var v=[['','Save game',''],['','Get',''],['','Set',''],['','User registration is required.','']];
+
+				if(ck[3]!=''){
+					w+='<STRONG>'+v[0][lg]+'</STRONG> : ';
+					w+='<TEXTAREA ID="bun" rows="1" cols="34" ONCLICK="this.select();"></TEXTAREA> ';
+					w+='<INPUT TYPE="SUBMIT" VALUE="'+v[1][lg]+'" ONCLICK="save2(\''+id+'\','+lg+')" ONMOUSEDOWN="';
+						w+='document.getElementById(\'bun\').value=\'\';document.getElementById(\'pass\').innerHTML=\'　\';';
+					w+='"> ';
+					w+='<INPUT TYPE="SUBMIT" VALUE="'+v[2][lg]+'" ONCLICK="load2(\''+id+'\','+lg+')" ONMOUSEDOWN="';
+						w+='document.getElementById(\'pass\').innerHTML=\'　\';';
+					w+='">';
+					w+='<DIV id="pass">　</DIV><BR>';
+				}else{
+					w+='<DIV><STRONG>'+v[0][lg]+'</STRONG> : '+v[3][lg]+'</DIV><BR>';
+				}
+
+				document.write(w);
+			}
+			hu_tag2('ranger',1);
+			</SCRIPT>
+		</div>
+
+		<canvas id="cv" width="512" height="384"></canvas>
+
+		<script src="Stick Ranger Modded.js"></script>
+
+		<script type="text/javascript">
+
+		Init("1",1,0);
+		</script>
+
+		<script type="text/javascript">
+		function save2(){
+			var s="",h="";
+
+			s=GameSave("0");
+
+			if(s!=''){
+				document.getElementById("bun").value=s;
+				h='Get OK';
+			}else{
+				h='Error';
+			}
+
+			document.getElementById("pass").innerHTML=h;
+		}
+		function load2(){
+			document.getElementById("bun").value=document.getElementById("bun").value.replace(/\x0D\x0A|\x0D|\x0A/g,'');
+
+			var s=document.getElementById("bun").value,ret=-1,h="";
+
+			if(s!='')	ret=GameLoad(s);
+
+			if(ret!=-1)	h='Set OK';
+			else		h='Error';
+
+			document.getElementById("pass").innerHTML=h;
+		}
+		</script>
+
+		<br>
+
+		<p align="center" style="width:512px;">Please support ha55ii, the original creator of SR, by playing his games on <a href="http://dan-ball.jp">dan-ball.jp</a>, including the original SR and other web games. </p>
+
+	</body>
+
+</html>
