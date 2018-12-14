@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)https://kingofkfcjamal.github.io/CaseClicker -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   
+    <title>CaseClicker</title>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link href="./CaseClicker_files/css" rel="stylesheet" type="text/css">
+    <link href="./CaseClicker_files/css(1)" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="./CaseClicker_files/font-awesome.min.css">
+    <link rel="stylesheet" href="./CaseClicker_files/stylesheet.css" media="screen" title="no title" charset="utf-8">
+	<script src="./CaseClicker_files/jquery.min.js.download"></script>
+	<script>
+</script>
+  </head>
+  <body>
+    <div class="container noselect">
+      <div class="notification hidden" id="notif">This is a Work-In-Progress Case Clicker Game for CS:GO.</div>
+      <div class="navbar">
+        <ul>
+          <li><a href="https://kingofkfcjamal.github.io/CaseClicker" class="headerLogo"></a></li>
+          <div class="settings"></div>
+          <div class="about">About</div>
+        </ul>
+      </div>
+      <div class="settingsList hidden">
+        <li><h1>SETTINGS</h1></li>
+        <li>Disable Popup: <input type="checkbox" id="popupCheckbox"></li>
+			<div class="audio">
+				<div class="sg">
+					&nbsp;&nbsp;<audio id="startgame" src="sounds/start-game.mp3" type="audio/mp3"></audio><input type="image" src="./CaseClicker_files/DerV5hu.png" onclick="audiosg();"><input type="image" src="./CaseClicker_files/jHVbUvE.png" onclick="audiosgup();" value="Volume Max"><input type="image" src="./CaseClicker_files/SwyIqRg.png" onclick="audiosgdown();" value="Volume Lowered"><input type="image" src="./CaseClicker_files/tViMF8c.png" onclick="audiosgmute();" value="Volume Mute"><b><font size="56" style="color:white;">You lost</font></b><br>
+				</div>
+				<div class="be">
+					&nbsp;&nbsp;<audio id="botentered" src="sounds/new-item.mp3" type="audio/mp3"></audio><input type="image" src="./CaseClicker_files/DerV5hu.png" onclick="audiobe();"><input type="image" src="./CaseClicker_files/jHVbUvE.png" onclick="audiobeup();" value="Volume Max"><input type="image" src="./CaseClicker_files/SwyIqRg.png" onclick="audiobedown();" value="Volume Lowered"><input type="image" src="./CaseClicker_files/tViMF8c.png" onclick="audiobemute();" value="Volume Mute"><b><font size="56" style="color:white;">Bot joins</font></b><br>
+				</div>
+				<div class="won">
+					&nbsp;&nbsp;<audio id="youwon" src="sounds/win-pot.mp3" type="audio/mp3"></audio><input type="image" src="./CaseClicker_files/DerV5hu.png" onclick="audiowon();"><input type="image" src="./CaseClicker_files/jHVbUvE.png" onclick="audiowonup();" value="Volume Max"><input type="image" src="./CaseClicker_files/SwyIqRg.png" onclick="audiowondown();" value="Volume Lowered"><input type="image" src="./CaseClicker_files/tViMF8c.png" onclick="audiowonmute();" value="Volume Mute"><b><font size="56" style="color:white;">You won</font></b><br>
+				</div>
+				<div class="a">
+					&nbsp;&nbsp;<audio id="accepted" src="sounds/click.wav" type="audio/wav"></audio><input type="image" src="./CaseClicker_files/DerV5hu.png" onclick="audioa();"><input type="image" src="./CaseClicker_files/jHVbUvE.png" onclick="audioaup();" value="Volume Max"><input type="image" src="./CaseClicker_files/SwyIqRg.png" onclick="audioadown();" value="Volume Lowered"><input type="image" src="./CaseClicker_files/tViMF8c.png" onclick="audioamute();" value="Volume Mute"><b><font size="56" style="color:white;">Accepted</font></b><br>
+				</div>
+				<div class="mc">
+					&nbsp;&nbsp;<audio id="menu" src="sounds/menuclick.wav" type="audio/wav"></audio><input type="image" src="./CaseClicker_files/DerV5hu.png" onclick="audiomc();"><input type="image" src="./CaseClicker_files/jHVbUvE.png" onclick="audiomcup();" value="Volume Max"><input type="image" src="./CaseClicker_files/SwyIqRg.png" onclick="audiomcdown();" value="Volume Lowered"><input type="image" src="./CaseClicker_files/tViMF8c.png" onclick="audiomcmute();" value="Volume Mute"><b><font size="56" style="color:white;">Menu</font></b><br>
+				</div>
+				<div class="ub">
+					&nbsp;&nbsp;<audio id="unbox" src="sounds/itemreveal.mp3" type="audio/mp3"></audio><input type="image" src="./CaseClicker_files/DerV5hu.png" onclick="audioub();"><input type="image" src="./CaseClicker_files/jHVbUvE.png" onclick="audioubup();" value="Volume Max"><input type="image" src="./CaseClicker_files/SwyIqRg.png" onclick="audioubdown();" value="Volume Lowered"><input type="image" src="./CaseClicker_files/tViMF8c.png" onclick="audioubmute();" value="Volume Mute"><b><font size="56" style="color:white;">Unbox</font></b><br>
+				</div>
+			</div>
+		<div class="clearGameState">Clear Game Save</div>
+      </div>
+      <div class="aboutContainer">
+        <div class="aboutInfo">
+          <div class="aboutHeader">Welcome to CaseClickerDeluexe.</div>
+          <div class="aboutBody">CaseClickerDeluexe is the Deluexe version of CaseClicker.</div>
+          <div class="aboutDevelopers">
+            <div class="aboutDev">
+              <a class="aboutDevName" href="google.com">Google</a>
+              <div class="aboutDevDesc">WITHOUT GOOGLE CHROME WE WOULD NOT BE ABLE TO COPY AND PASTE GRRRRRR.</div>
+            </div>
+            <div class="aboutDev">
+			  <a class="aboutDevName" href="roblox.com">ROBLOX</a>
+              <div class="aboutDevDesc">For powering imagination and hashtags.</div>
+            </div>
+			<div class="aboutDev">
+			  <a class="aboutDevName" href="https://steamcommunity.com/id/KingofKFC">King of KFC Jamal</a>
+              <div class="aboutDevDesc">HE MADE THE SICK MAN TING!!!.</div>
+            </div>
+          </div>
+          <div class="aboutLinks"></div>
+        </div>
+      </div>
+      <div class="tooltipAnchor"></div>
+      <div class="main">
+        <div class="modalWindow">
+          <div class="modalMain">
+
+          </div>
+        </div>
+        <canvas id="drawing"></canvas>
+        <!-- <canvas id="canvas"></canvas> -->
+        <div class="left">
+          <div class="display" style="width: 583px;">
+            <div class="jackpot">
+              <div class="jackpotTopContainer">
+                <div class="jackpotTop">
+                  <!--
+                  <div class="canvasContainer">
+        						<canvas id="canvasCircle" width="450" height="450"></canvas>
+        					</div>
+                -->
+                  <div class="jackpotStats">
+                    <div class="jackpotCountDownLabel">Time Left</div>
+                    <div class="jackpotCountDown">00</div>
+                    <div class="winnerIs"></div>
+                    <div class="jackpotCurrentWorth"></div>
+                    <div class="jackpotPercentOfTickets"></div>
+                  </div>
+                  <div class="depositorLabel">
+                    <div class="depositorNameLabel">Name</div>
+                    <div class="depositorPriceLabel">Price</div>
+                    <div class="depositorItemsLabel">Items</div>
+                  </div>
+                </div>
+              </div>
+              <div class="jackpotBottomContainer">
+                  <div class="depositorMainInfo">
+
+                  </div>
+                  <div class="depositorContainer">
+                    <!--
+                    <div class="jackpotDepositor">
+                      <div class="depositorInfo">
+                        <img src="http://i.imgur.com/BzuCWzL.png" class="depositorProPic" id="">
+                        <div class="depositorName">Platinum (diff7)</div>
+                        <div class="depositorValue">$942.65</div>
+                        <div class="depositorSkinContainer">
+                          <div class="depositorSkin">
+                            <div class="itemPrice">$5.50</div>
+                            <img src="">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  -->
+                  </div>
+              </div>
+            </div>
+            <div class="unboxing">
+              <div class="backgroundImage"></div>
+              <div class="caseDisplay" id="case">
+                <img src="./CaseClicker_files/240fx182f" id="caseDisplayImage">
+                <div class="caseInfoContainer">
+                  <div class="caseName" id="caseName">Weapon Case 1</div> 
+                  <div class="priceContainer">
+                    <div class="casePrice" id="casePrice">Case Price: $6.90  |</div>
+                    <div class="keyPrice" id="keyPrice">Key Price: $2.50</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="right">
+          <div class="mainInfo">
+            <div class="mainInfoLabel wallet">Wallet: <span class="money" id="money">$7.50</span></div>
+            <div class="mainInfoLabel inv" id="invSpace">Inventory Space: <span class="inventorySpace" id="inventorySpace">0/50</span> <div class="mainInfoLabelWarning tt" data-tt="Inventory over max capacity."><i class="fa fa-exclamation-triangle"></i></div></div>
+          </div>
+          <div class="tabContainer">
+            <div class="tab active" id="inventoryTab">Inventory</div>
+            <div class="tab" id="upgradeTab">Tesco</div>
+            <div class="tab" id="caseTab">Case</div>
+            <div class="tab" id="jackpotTab">Jackpot</div>
+			<div class="tab" id="coinTab">Coin Flip</div>
+			<div class="tab" id="consoleTab">Console</div>
+			<div class="tab" id="rouletteTab">Roulette</div>
+          </div>
+          <div class="rightMain">
+            <div class="inventoryContainer">
+              <div class="inventoryTagContainer"><span class="inventoryTag">Inventory</span><span class="inventoryValue">Value: </span></div>
+              <div class="inventoryItemContainer">
+
+              </div>
+              <!--
+              <div class="inventoryItem">
+                <div class="itemPrice">$5.50</div>
+                <img src="http://steamcommunity-a.akamaihd.net/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposbaqKAxf0v73dS9D69O4q4eHmPT_DLfYkWNF18lwmO7Eu4mh2lXj-RJtajjxJoWcIQ83Y13X-QO2ye_ojJ61u8yfynUwvXYq4XbD30vgIiQpgfY/360fx360f">
+              </div>
+            -->
+            </div>
+            <div class="upgradeContainer">
+              <div class="stackingUpgradeContainer">
+
+              <div class="upgrade" id="upgrade1"> <div class="upgradePicture"> <img src="./CaseClicker_files/100fx100f" id="upgradePicture"></div> <div class="upgradeInfo"> <div class="upgradeName">Inventory Space</div> <div class="upgradeDesc">+1 to your max inventory space.</div> <div class="upgradePriceLabel">Price: <span class="upgradePrice">$15.00</span> </div> <div class="upgradeAmountLabel">Amount: <span class="upgradeAmount">0</span> </div> </div> </div><div class="upgrade" id="upgrade2"> <div class="upgradePicture"> <img src="./CaseClicker_files/100fx100f(1)" id="upgradePicture"></div> <div class="upgradeInfo"> <div class="upgradeName">Key Discount</div> <div class="upgradeDesc">Discount Key Prices</div> <div class="upgradePriceLabel">Price: <span class="upgradePrice">$150.00</span> </div> <div class="upgradeAmountLabel">Amount: <span class="upgradeAmount">0</span> </div> </div> </div><div class="upgrade" id="upgrade3"> <div class="upgradePicture"> <img src="./CaseClicker_files/100fx100f" id="upgradePicture"></div> <div class="upgradeInfo"> <div class="upgradeName">More Money</div> <div class="upgradeDesc">More money per click +10</div> <div class="upgradePriceLabel">Price: <span class="upgradePrice">$500.00</span> </div> <div class="upgradeAmountLabel">Amount: <span class="upgradeAmount">0</span> </div> </div> </div></div>
+              <div class="permUpgradeContainer">
+                <div class="permUpgrade" id="permUpgrade1"><i class="fa fa-cubes fa-2x"></i><span class="permUpgradeLabel" id="permUpgradeLabel1">..........</span></div>
+                <div class="permUpgrade locked" id="permUpgrade2"><i class="fa fa-exchange fa-2x"></i><span class="permUpgradeLabel" id="permUpgradeLabel2">..........</span></div>
+                <div class="permUpgrade locked" id="permUpgrade3"><i class="fa fa-cubes fa-2x"></i><span class="permUpgradeLabel" id="permUpgradeLabel3">..........</span></div>
+                <div class="permUpgrade locked" id="permUpgrade4"><i class="fa fa-cubes fa-2x"></i><span class="permUpgradeLabel" id="permUpgradeLabel4">..........</span></div>
+              </div>
+              <!--
+              <div class="upgrade cantAfford">
+                <div class="upgradePicture"></div>
+                <div class="upgradeInfo">
+                  <div class="upgradeName">Test Upgrade</div>
+                  <div class="upgradeDesc">Test Description lorem ipsum dolar sit amet</div>
+                  <div class="upgradePrice">$999999999.00</div>
+                </div>
+              </div>
+            -->
+            </div>
+			
+            <div class="caseContainer">
+              <!--
+              <div class="case locked">
+                <div class="casePicture"></div>
+                <div class="caseInfo">
+                  <div class="caseName"></div>
+                  <div class="caseValue"></div>
+                </div>
+              </div>
+            -->
+            <div class="case" id="case1"> <div class="casePicture"> <img src="./CaseClicker_files/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsRVx4MwFo5_T3eAQ3i6DMIW0X7ojiwoHax6egMOKGxj4G68Nz3-jCp4itjFWx-ktqfSmtcwqVx6sT" id="casePicture"></div> <div class="caseInfo"> <div class="caseTitle">Weapon Case 1</div> <div class="caseValue">Value: $6.90</div> </div> </div><div class="case" id="case2"> <div class="casePicture"> <img src="./CaseClicker_files/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsVk5kKhZDpYX3e1YznfCcdzkR74vnw9TZwa-sYOOCzzoF6ZJ0jL6Qp9uj3Qbj_Uc6Z2z1I9WLMlhp9VPHu3g" id="casePicture"></div> <div class="caseInfo"> <div class="caseTitle">eSports 2013 Case</div> <div class="caseValue">Value: $9.57</div> </div> </div><div class="case" id="case3"> <div class="casePicture"> <img src="./CaseClicker_files/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsXE1xNwVDv7WrFA5pnabNJGwSuN3gxtnawKOlMO6HzzhQucAm0uvFo4n2iw3h_UM-ZmilJNeLMlhpjfjxEoE" id="casePicture"></div> <div class="caseInfo"> <div class="caseTitle">Bravo Case</div> <div class="caseValue">Value: $10.64</div> </div> </div><div class="case" id="case4"> <div class="casePicture"> <img src="./CaseClicker_files/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsRVx4MwFo5PT8elUwgKKZJmtEvo_kxITZk6StNe-Fz2pTu8Aj3eqVpIqgjVfjrRI9fSmtc1Nw-Kh3" id="casePicture"></div> <div class="caseInfo"> <div class="caseTitle">CS:GO Weapon Case 2</div> <div class="caseValue">Value: $1.57</div> </div> </div><div class="case" id="case5"> <div class="casePicture"> <img src="./CaseClicker_files/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsVk5kKhZDpYX3e1Yz7KKcPzwav9jnzdfdlfWmY7_TzmkF6ZMlj77A9o3x0Qe1qhBkZGjxI9LBJgMgIQaH1G7WeaA" id="casePicture"></div> <div class="caseInfo"> <div class="caseTitle">eSports 2013 Winter Case</div> <div class="caseValue">Value: $0.30</div> </div> </div><div class="case" id="case6"> <div class="casePicture"> <img src="./CaseClicker_files/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsUFJ5KBFZv668FFYu0aKfJz8a793gxNLfzvOkMunUwWgH7JIjj-qW8d7x2VXt_UBuMT3zIpjVLFEGDSGUSQ" id="casePicture"></div> <div class="caseInfo"> <div class="caseTitle">Winter Offensive Weapon Case</div> <div class="caseValue">Value: $1.68</div> </div> </div><div class="case" id="case7"> <div class="casePicture"> <img src="./CaseClicker_files/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsRVx4MwFo5fSnf15k0KGacG0UtYXnzdTdkq-gariGlDgHvMcmjryZotqg2wCxrUVtfSmtc20v4quI" id="casePicture"></div> <div class="caseInfo"> <div class="caseTitle">CS:GO Weapon Case 3</div> <div class="caseValue">Value: $0.41</div> </div> </div><div class="case" id="case8"> <div class="casePicture"> <img src="./CaseClicker_files/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsUFJ5KBFZv668FFUuh6qZJmlD7tiyl4OIlaGhYuLTzjhVupJ12urH89ii3lHlqEdoMDr2I5jVLFFSv_J2Rg" id="casePicture"></div> <div class="caseInfo"> <div class="caseTitle">Operation Phoenix Weapon Case</div> <div class="caseValue">Value: $0.12</div> </div> </div><div class="case" id="case9"> <div class="casePicture"> <img src="./CaseClicker_files/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsUFJ5KBFZv668FFQu0PaQIm9DtY6wzYaIxKWtN7iJwW8G6Z0h2LqWoY6s2Qy2-0Q_Nzv7IJjVLFGZqUbjlQ" id="casePicture"></div> <div class="caseInfo"> <div class="caseTitle">Huntsman Weapon Case</div> <div class="caseValue">Value: $1.04</div> </div> </div><div class="case" id="case10"> <div class="casePicture"> <img src="./CaseClicker_files/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsUFJ5KBFZv668FFMu1aPMI24auITjxteJwPXxY72AkGgIvZAniLjHpon2jlbl-kpvNjz3JJjVLFG9rl1YLQ" id="casePicture"></div> <div class="caseInfo"> <div class="caseTitle">Operation Breakout Weapon Case</div> <div class="caseValue">Value: $0.07</div> </div> </div><div class="case" id="case11"> <div class="casePicture"> <img src="./CaseClicker_files/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsVk5kKhZDpYX3e1Y07ODdfDBH_pKzwdfSkqTyZLjQxjsF7sEoiLyQ9I2ljgHt_EZlYzr6J4DHIA9oZ1-D5BHglkR7Cs6C" id="casePicture"></div> <div class="caseInfo"> <div class="caseTitle">eSports 2014 Summer Case</div> <div class="caseValue">Value: $0.46</div> </div> </div><div class="case" id="case12"> <div class="casePicture"> <img src="./CaseClicker_files/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsUFJ5KBFZv668FFIuh6rJImVGvtjllYaNka6la7rUxWkE65BzibvD9N7z0Q22-0Fka2GlJ5jVLFHqavWW2g" id="casePicture"></div> <div class="caseInfo"> <div class="caseTitle">Operation Vanguard Weapon Case</div> <div class="caseValue">Value: $0.28</div> </div> </div><div class="case" id="case13"> <div class="casePicture"> <img src="./CaseClicker_files/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsUFJ5KBFZv668FFEuh_KQJTtEuI63xIXbxqOtauyClTMEsJV1jruS89T3iQKx_BBqa2j3JpjVLFH1xpp0EQ" id="casePicture"></div> <div class="caseInfo"> <div class="caseTitle">Chroma Case</div> <div class="caseValue">Value: $0.10</div> </div> </div><div class="case" id="case14"> <div class="casePicture"> <img src="./CaseClicker_files/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsUFJ5KBFZv668FFAuhqSaKWtEu43mxtbbk6b1a77Twm4Iu8Yl3bCU9Imii1Xt80M5MmD7JZjVLFH-6VnQJQ" id="casePicture"></div> <div class="caseInfo"> <div class="caseTitle">Chroma 2 Case</div> <div class="caseValue">Value: $0.15</div> </div> </div><div class="case" id="case15"> <div class="casePicture"> <img src="./CaseClicker_files/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsUFJ5KBFZv668FF8ugPDMIWpAuIq1w4KIlaChZOyFwzgJuZNy3-2T89T0jlC2rhZla2vwIJjVLFHz75yKpg" id="casePicture"></div> <div class="caseInfo"> <div class="caseTitle">Falchion Case</div> <div class="caseValue">Value: $0.05</div> </div> </div><div class="case" id="case16"> <div class="casePicture"> <img src="./CaseClicker_files/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsUFJ5KBFZv668FF4u1qubIW4Su4mzxYHbzqGtZ-KGlz8EuJcg3rnE9NiijVe3_UY-Zzr2JJjVLFEEeiQRtg" id="casePicture"></div> <div class="caseInfo"> <div class="caseTitle">Shadow Case</div> <div class="caseValue">Value: $0.05</div> </div> </div><div class="case" id="case17"> <div class="casePicture"> <img src="./CaseClicker_files/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsUFJ5KBFZv668FFYwnfKfcG9HvN7iktaOkqD1auLTxD5SvZYgiLvFpo7xjVLh-kdrYWnzcoGLMlhpsyM-5vg" id="casePicture"></div> <div class="caseInfo"> <div class="caseTitle">Revolver Case</div> <div class="caseValue">Value: $0.04</div> </div> </div><div class="case" id="case18"> <div class="casePicture"> <img src="./CaseClicker_files/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsUFJ5KBFZv668FFYxnaeQImRGu4S1x9TawfSmY-iHkmoD7cEl2LiQpIjz3wPl_ERkYWHwLY-LMlhp9pkR_UQ" id="casePicture"></div> <div class="caseInfo"> <div class="caseTitle">Operation Wildfire Case</div> <div class="caseValue">Value: $0.06</div> </div> </div><div class="case" id="case19"> <div class="casePicture"> <img src="./CaseClicker_files/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsUFJ5KBFZv668FFYynaSdJGhE74y0wNWIw_OlNuvXkDpSuZQmi--SrN-h3gey-Uo6YWmlIoCLMlhplhFFvwI" id="casePicture"></div> <div class="caseInfo"> <div class="caseTitle">Chroma 3 Case</div> <div class="caseValue">Value: $1.29</div> </div> </div><div class="case" id="case20"> <div class="casePicture"> <img src="./CaseClicker_files/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsUFJ5KBFZv668FFYznarJJjkQ6ovjw4SPlfP3auqEl2oBuJB1j--WoY322QziqkdpZGr3IteLMlhpw4RJCv8" id="casePicture"></div> <div class="caseInfo"> <div class="caseTitle">Gamma Case</div> <div class="caseValue">Value: $0.47</div> </div> </div></div>
+            <div class="jackpotRightContainer">
+              <div class="jackpotDifficultyContainer">
+                <div class="jackpotDifficulty active" id="low">Low</div>
+                <div class="jackpotDifficulty" id="medium">Medium</div>
+                <div class="jackpotDifficulty" id="high">High</div>
+              </div>
+              <div class="inventoryTagContainer"><span class="inventoryTag">Inventory</span><span class="inventoryValue">Value: </span></div>
+              <div class="jackpotRightPlayer"></div>
+              <div class="jackpotRightSTBTag">Skins to bet:</div>
+              <div class="jackpotRightToBet"></div>
+              <div class="jackpotRightInfo">
+                <div class="jackpotRightValue"><span class="spanTag">Value: </span><span class="jackpotRightValueTotal">$0.00</span></div>
+                <div class="jackpotRightSkins"><span class="spanTag">Skins: </span><span class="jackpotRightSkinsTotal">0/6</span></div>
+                <div class="jackpotRightStartButton">Enter Jackpot</div>
+              </div>
+            </div>
+			<div class="coinContainer"><br><br><br>
+			<center><button onclick="myFunction()"><img src="./CaseClicker_files/Ga7WRKc.png"></button></center>
+			</div>
+			<div class="consoleContainer"><br><br><br>
+			<center><button onclick="consoleprompt()"><img src="./CaseClicker_files/console.png"></button></center>
+			</div>
+			<div class="rouletteContainer"><br><br><br>
+			<center><button onclick="roulettefunc()"><img src="./CaseClicker_files/roulette.png"></button></center>
+			<div class="instructions"><span class="spanTag">Bet on red, black or green. Green = 14x payout, Red and Black = 2x Payout </span></div>
+			</div>
+          <div class="tradeButtonContainer">
+            <div class="tradeButton" id="acceptButton">ACCEPT</div>
+			
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./CaseClicker_files/script.js.download" type="text/javascript"></script>
+  
+</div></body></html>
