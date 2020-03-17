@@ -2,7 +2,7 @@ var game = {
   // game infos
   state: null,
   level: 1,
-  level_max: 25,
+  level_max: 50,
   best_level: 1,
   warning: 0,
   mines_total: 5,
@@ -82,6 +82,10 @@ var game = {
     if (game.level > 12) {
       game.rows = game.cols = 10;
       $('#board').addClass('board-10');
+    }
+    if (game.level > 25) {
+      game.rows = game.cols = 11;
+      $('#board').addClass('board-11');
     }
     $('#level-zone').html('Level ' + game.level + '<br>Best ' + game.best_level);
     $('#nb-flags').html('0');
