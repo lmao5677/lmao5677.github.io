@@ -71,19 +71,19 @@ var game = {
     game.mines_total = 9 + game.level;
     game.rows = game.cols = 7;
     $('#board').removeClass('board-8 board-9 board-10');
-    if (game.level > 3) {
+    if (game.level > 5) {
       game.rows = game.cols = 8;
       $('#board').addClass('board-8');
     }
-    if (game.level > 7) {
+    if (game.level > 9) {
       game.rows = game.cols = 10;
       $('#board').addClass('board-10');
     }
-    if (game.level > 12) {
+    if (game.level > 14) {
       game.rows = game.cols = 11;
       $('#board').addClass('board-11');
     }
-	if (game.level > 20) {
+	if (game.level > 24) {
       game.rows = game.cols = 13;
       $('#board').addClass('board-13');
     }
