@@ -68,7 +68,7 @@ var game = {
   },
 
   start: function () {
-    game.mines_total = 9 + game.level;
+    game.mines_total = 3 * (3 + game.level);
     game.rows = game.cols = 7;
     $('#board').removeClass('board-8 board-9 board-10');
     if (game.level > 5) {
