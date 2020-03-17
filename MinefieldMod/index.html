@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+  <title>Minefield</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <div id="page">
+    <h1>Minefield</h1>
+    <div id="game-zone">
+      <div class="cf" id="board">
+        <div class="loading">Loading...</div>
+      </div>
+      <div class="cf" id="infos">
+        <div id="level-zone"></div>
+        <div id="mines-zone">
+          <div class="cf">
+            <div class="illus-flags"></div>
+            <div id="nb-flags"></div>
+          </div>
+          <div class="cf">
+            <div class="illus-mines"></div>
+            <div id="nb-mines"></div>
+          </div>
+        </div>
+        <div id="switch"></div>
+        <div id="info-click"></div>
+      </div>
+      <div id="overlay">
+      </div>
+    </div>
+    <div id="landscape-orientation">
+      <p>
+        Please rotate your device
+        <br>to <strong>portrait</strong> mode
+      </p>
+    </div>
+    <div class="ad">
+      <script type="text/javascript" src="http://ad.leadboltmobile.net/show_app_ad.js?section_id=831282474"></script>
+    </div>
+  </div>
+
+  <script src="js/jquery-2.0.1.min.js"></script>
+  <script src="js/game.js"></script>
+
+  <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-20127424-1']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+</body>
+</html>
