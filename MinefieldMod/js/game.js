@@ -12,9 +12,9 @@ var game = {
   rows: 7,
   cols: 7,
   images: [
-    'images/sprite.png',
-    'images/buttons.png',
-    'images/explosion.png'
+    'images/sprite.PNG',
+    'images/buttons.PNG',
+    'images/explosion.PNG'
   ],
 
   init: function () {
