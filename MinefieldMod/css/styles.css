@@ -73,7 +73,7 @@ h1 {
 }
 .illus-flags {
   float: right;
-  background-image: url("../images/sprite.png");
+  background-image: url("../images/sprite.PNG");
   background-size: 500% 100%;
   background-position: 50% 0;
   background-repeat: no-repeat;
@@ -84,7 +84,7 @@ h1 {
 }
 .illus-mines {
   float: right;
-  background-image: url("../images/sprite.png");
+  background-image: url("../images/sprite.PNG");
   background-size: 500% 100%;
   background-position: 100% 0;
   background-repeat: no-repeat;
@@ -95,7 +95,7 @@ h1 {
 }
 
 #switch {
-  background-image: url("../images/buttons.png");
+  background-image: url("../images/buttons.PNG");
   background-size: 100% 300%;
   background-repeat: no-repeat;
   width: 40%;
@@ -114,7 +114,7 @@ h1 {
 }
 #info-click {
   display: none;
-  background-image: url("../images/buttons.png");
+  background-image: url("../images/buttons.PNG");
   background-size: 100% 300%;
   background-position: 50% 0%;
   background-repeat: no-repeat;
@@ -163,38 +163,38 @@ h1 {
   font-size: 1.2em;
 }
 .tile.not-played {
-  background-image: url("../images/sprite.png");
+  background-image: url("../images/sprite.PNG");
   background-size: 500% 100%;
   background-position: 25% 0;
   background-repeat: no-repeat;
 }
 .tile.played {
-  background-image: url("../images/sprite.png");
+  background-image: url("../images/sprite.PNG");
   background-size: 500% 100%;
   background-position: 0 0;
   background-repeat: no-repeat;
 }
 .tile.flag {
-  background-image: url("../images/sprite.png"), url("../images/sprite.png");
+  background-image: url("../images/sprite.PNG"), url("../images/sprite.PNG");
   background-size: 500% 100%, 500% 100%;
   background-position: 50% 0, 25% 0;
   background-repeat: no-repeat, no-repeat;
 }
 .tile.wrong-flag {
-  background-image: url("../images/sprite.png"), url("../images/sprite.png");
+  background-image: url("../images/sprite.PNG"), url("../images/sprite.PNG");
   background-size: 500% 100%, 500% 100%;
   background-position: 75% 0, 25% 0;
   background-repeat: no-repeat, no-repeat;
 }
 .tile.mine {
-  background-image: url("../images/sprite.png"), url("../images/sprite.png");
+  background-image: url("../images/sprite.PNG"), url("../images/sprite.PNG");
   background-size: 500% 100%, 500% 100%;
   background-position: 100% 0, 25% 0;
   background-repeat: no-repeat, no-repeat;
 }
 .tile.exploded {
   background-color: #f00;
-  background-image: url("../images/sprite.png");
+  background-image: url("../images/sprite.PNG");
   background-size: 500% 100%;
   background-position: 100% 0;
   background-repeat: no-repeat;
@@ -296,7 +296,7 @@ h1 {
 
 .explosion{
   position: absolute;
-  background-image: url(../images/explosion.png); 
+  background-image: url(../images/explosion.PNG); 
   background-size: 500% 100%; 
   width: 10%; 
   height: 10%;
