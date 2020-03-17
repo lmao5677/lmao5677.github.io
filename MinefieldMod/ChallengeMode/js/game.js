@@ -46,15 +46,15 @@ var game = {
     $(window).resize(game.resize);
     
     // check saved level
-    var local_level_minefield = localStorage.getItem('level_minefield');
+    var local_level_minefield = localStorage.getItem('level_minefieldchallenge');
     if (local_level_minefield != null) {
       game.level = Number(local_level_minefield);
     }
-    var local_best_level_minefield = localStorage.getItem('best_level_minefield');
+    var local_best_level_minefield = localStorage.getItem('best_level_minefieldchallenge');
     if (local_best_level_minefield != null) {
       game.best_level = Number(local_best_level_minefield);
     }
-    var local_warning_minefield = localStorage.getItem('warning_minefield');
+    var local_warning_minefield = localStorage.getItem('warning_minefieldchallenge');
     if (local_warning_minefield != null) {
       game.warning = Number(local_warning_minefield);
     }
@@ -562,7 +562,7 @@ var game = {
       $h3 = $('<h3>Level up!</h3>');
     };
     try {
-      localStorage.setItem('level_minefield', game.level);
+      localStorage.setItem('level_minefieldchallenge', game.level);
       setTimeout(function() {
         $msg_save = $('<h3>(saved)</h3>');
         $('#overlay').append($msg_save);
@@ -572,12 +572,12 @@ var game = {
     if (game.level > game.best_level) {
       game.best_level = game.level;
       try {
-        localStorage.setItem('best_level_minefield', game.best_level);
+        localStorage.setItem('best_level_minefieldchallenge', game.best_level);
       } catch (error) {}
     }
     game.warning = 0;
     try {
-      localStorage.setItem('warning_minefield', game.warning);
+      localStorage.setItem('warning_minefieldchallenge', game.warning);
     } catch (error) {}
     $('#overlay').html('<h2 class="msg-win">You Win</h2>').fadeIn();
     setTimeout(function() {
@@ -612,12 +612,12 @@ var game = {
     var $h3 = null;
     game.warning++;
     try {
-      localStorage.setItem('warning_minefield', game.warning);
+      localStorage.setItem('warning_minefieldchallenge', game.warning);
     } catch (error) {}
     if (game.warning > 1 && game.level > 1) {
       game.level--;
       try {
-        localStorage.setItem('level_minefield', game.level);
+        localStorage.setItem('level_minefieldchallenge', game.level);
         setTimeout(function() {
           $msg_save = $('<h3>(saved)</h3>');
           $('#overlay').append($msg_save);
@@ -626,7 +626,7 @@ var game = {
       } catch (error) {}
       game.warning = 0;
       try {
-        localStorage.setItem('warning_minefield', game.warning);
+        localStorage.setItem('warning_minefieldchallenge', game.warning);
       } catch (error) {}
       $h3 = $('<h3>Level down...</h3>');
     } else {
