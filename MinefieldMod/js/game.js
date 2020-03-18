@@ -546,7 +546,11 @@ var game = {
     if (game.level > game.level_max) {
       game.level = game.level_max;
       $h3 = $('<h3>Congratulations!<br>You beat the last level!</h3>');
-    } else {
+    } 
+    else if (game.level == 26){
+      $h3 = $('<h3>Well done!<br>You beat the original 25 levels. Now try the next 25...</h3>');
+    }
+    else {
       $h3 = $('<h3>Level up!</h3>');
     };
     try {
