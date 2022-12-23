@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Match 3 Game</title>
+</head>
+<body>
+  <div id="game-board">
+    <!-- The game board will be generated dynamically using JavaScript -->
+  </div>
+  <script>
+    // Set up constants for the game
+    const ROWS = 8;
+    const COLS = 8;
+    const GEM_TYPES = 6;
+    const GEM_SIZE = 50;
+    const GAP_SIZE = 10;
+    const BOARD_SIZE = ROWS * COLS;
+    
+    // Set up game state variables
+    let gameOver = false;
+    let moves = 0;
+    let selectedGem = null;
+    
+    // Set up the game board
+    let gameBoard = [];
+    for (let i = 0; i < BOARD_SIZE; i++) {
+      gameBoard[i] = Math.floor(Math.random() * GEM_TYPES);
+    }
+    
+    // Generate the game board HTML
+    let boardHTML = '';
+    for (let row = 0; row < ROWS; row++) {
+      for (let col = 0; col < COLS; col++) {
+        let gemType = gameBoard[row * COLS + col];
+        let gemHTML = `<div class="gem gem-${gemType}" style="top: ${row * (GEM_SIZE + GAP_SIZE)}px; left: ${col * (GEM_SIZE + GAP_SIZE)}px;" data-row="${row}" data-col="${col}"></div>`;
+        boardHTML += gemHTML;
+      }
+    }
+    document.getElementById('game-board').innerHTML = boardHTML;
+    
+    // Add event listeners for gem clicks
+    let gems = document.querySelectorAll('.gem');
+    gems.forEach(gem => gem.addEventListener('click', handleGemClick));
+    
+    // Handle gem clicks
+    function handleGemClick(event) {
+      let gem = event.currentTarget;
+      let row = parseInt(gem.dataset.row);
+      let col = parseInt(gem.dataset.col);
+      
+      // If the user has not yet selected a gem, mark this gem as selected
+      if (!selectedGem) {
+        selectedGem = { row: row, col: col };
+        gem.classList.add('selected');
+      } 
+      // If the user has already selected a gem, check if the two gems can be swapped
+      else {
+        // Check if the two gems are adjacent
+        let rowDiff = Math.abs(row - selectedGem.row);
+        let colDiff = Math.abs(col - selectedGem.col);
+        if ((rowDiff === 1 && colDiff === 0) || (rowDiff === 0 && colDiff === 1)) {
+          // Swap the gems
+          swapGems(gem, selectedGem);
+          // Check if the move created a match
+          if (checkMatch()) {
+            // Remove the matched gems and refill the board
+            removeGems();
+            refillBoard();
+          }
+          // Reset the selected gem
+          selectedGem = null;
+          // Increment the number of moves
+          moves++;
+          // Check if the user is out of moves
+          if (moves >= 20) {
+            gameOver = true;
+            alert('Game over! You ran out of moves.');
+          }
+        } else {
+          // The selected gems are not adjacent, so deselect the current gem
+          gem.classList.remove('selected');
+          selectedGem = null;
+        }
+      }
+    }
+    
+    // Swap the positions of two gems on the game board
+    function swapGems(gem1, gem2) {
+      let temp = gameBoard[gem1.dataset.row * COLS + gem1.dataset.col];
+      gameBoard[gem1.dataset.row * COLS + gem1.dataset.col] = gameBoard[gem2.dataset.row * COLS + gem2.dataset.col];
+      gameBoard[gem2.dataset.row * COLS + gem2.dataset.col] = temp;
+      
+      // Update the positions of the gems on the page
+      let gem1Top = gem1.style.top;
+      let gem1Left = gem1.style.left;
+      gem1.style.top = gem2.style.top;
+      gem1.style.left = gem2.style.left;
+      gem2.style.top = gem1Top;
+      gem2.style.left = gem1Left;
+    }
+    
+    // Check if the current board configuration contains any matches
+    function checkMatch() {
+      // Iterate through the game board and check for horizontal matches
+      for (let row = 0; row < ROWS; row++) {
+        for (let col = 0; col < COLS - 2; col++) {
+          if (gameBoard[row * COLS + col] === gameBoard[row * COLS + col + 1] && gameBoard[row * COLS + col] === gameBoard[row * COLS + col + 2]) {
+            return true;
+          }
+        }
+      }
+      
+      // Iterate through the game board and check for vertical matches
+      for (let row = 0; row < ROWS - 2; row++) {
+        for (let col = 0; col < COLS; col++) {
+          if (gameBoard[row * COLS + col] === gameBoard[(row + 1) * COLS + col] && gameBoard[row * COLS + col] === gameBoard[(row + 2) * COLS + col]) {
+            return true;
+          }
+        }
+      }
+      
+      // No matches were found
+      return false;
+    }
+    
+    // Remove matched gems from the board and refill the board with new gems
+    function removeGems() {
+      // TODO: Implement the logic for removing matched gems and refilling the board
+    }
+    
+    // Refill the board with new gems after matches have been removed
+    function refillBoard() {
+      // TODO: Implement the logic for refilling the board with new gems
+    }
+  </script>
+<style>
+  /* Gem styles */
+  .gem {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+  }
+  .gem-0 {
+    background-color: #f44336;
+  }
+  .gem-1 {
+    background-color: #9c27b0;
+  }
+  .gem-2 {
+    background-color: #3f51b5;
+  }
+  .gem-3 {
+    background-color: #03a9f4;
+  }
+  .gem-4 {
+    background-color: #8bc34a;
+  }
+  .gem-5 {
+    background-color: #ffeb3b;
+  }
+  
+  /* Styles for selected gems */
+  .gem.selected {
+    border: 5px solid #ffffff;
+  }
+</style>
+</body>
+</html>
