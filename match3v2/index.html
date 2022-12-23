@@ -84,12 +84,12 @@
       }
     }
     
-    // Swap the positions of two gems on the game board
+   // Swap the positions of two gems on the game board
     function swapGems(gem1, gem2) {
       let temp = gameBoard[gem1.dataset.row * COLS + gem1.dataset.col];
       gameBoard[gem1.dataset.row * COLS + gem1.dataset.col] = gameBoard[gem2.dataset.row * COLS + gem2.dataset.col];
       gameBoard[gem2.dataset.row * COLS + gem2.dataset.col] = temp;
-      
+
       // Update the positions of the gems on the page
       let gem1Top = gem1.style.top;
       let gem1Left = gem1.style.left;
@@ -97,7 +97,14 @@
       gem1.style.left = gem2.style.left;
       gem2.style.top = gem1Top;
       gem2.style.left = gem1Left;
+
+      // Update the data-row and data-col attributes of the gems
+      gem1.setAttribute('data-row', gem2.getAttribute('data-row'));
+      gem1.setAttribute('data-col', gem2.getAttribute('data-col'));
+      gem2.setAttribute('data-row', gem1.dataset.row);
+      gem2.setAttribute('data-col', gem1.dataset.col);
     }
+
     
     // Check if the current board configuration contains any matches
     function checkMatch() {
