@@ -52,6 +52,7 @@ function handleMove(event) {
 
 // Generate the initial board
 generateBoard();
+console.log("Board Generated!");
 
 // Attach an event listener to the table element to listen for clicks
 document.getElementById("board").addEventListener("click", handleMove);
