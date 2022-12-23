@@ -42,12 +42,12 @@
     let gems = document.querySelectorAll('.gem');
     gems.forEach(gem => gem.addEventListener('click', handleGemClick));
     
-    // Handle gem clicks
+   // Handle gem clicks
     function handleGemClick(event) {
       let gem = event.currentTarget;
-      let row = parseInt(gem.dataset.row);
-      let col = parseInt(gem.dataset.col);
-      
+      let row = parseInt(gem.getAttribute('data-row'));
+      let col = parseInt(gem.getAttribute('data-col'));
+
       // If the user has not yet selected a gem, mark this gem as selected
       if (!selectedGem) {
         selectedGem = { row: row, col: col };
@@ -83,6 +83,7 @@
         }
       }
     }
+
     
    // Swap the positions of two gems on the game board
     function swapGems(gem1, gem2) {
