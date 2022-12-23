@@ -1,0 +1,25 @@
+#board {
+  border-collapse: collapse;
+}
+
+#board td {
+  width: 50px;
+  height: 50px;
+  border: 1px solid black;
+}
+
+#board td.red {
+  background-color: red;
+}
+
+#board td.yellow {
+  background-color: yellow;
+}
+
+#board td.blue {
+  background-color: blue;
+}
+
+#board td.green {
+  background-color: green;
+}
