@@ -88,8 +88,8 @@
    // Swap the positions of two gems on the game board
     function swapGems(gem1, gem2) {
       let temp = gameBoard[gem1.dataset.row * COLS + gem1.dataset.col];
-      gameBoard[gem1.dataset.row * COLS + gem1.dataset.col] = gameBoard[gem2.dataset.row * COLS + gem2.dataset.col];
-      gameBoard[gem2.dataset.row * COLS + gem2.dataset.col] = temp;
+      gameBoard[gem1.getAttribute('data-row') * COLS + gem1.getAttribute('data-col')] = gameBoard[gem2.getAttribute('data-row') * COLS + gem2.getAttribute('data-col')];
+      gameBoard[gem2.getAttribute('data-row') * COLS + gem2.getAttribute('data-col')] = temp;
 
       // Update the positions of the gems on the page
       let gem1Top = gem1.style.top;
@@ -102,8 +102,8 @@
       // Update the data-row and data-col attributes of the gems
       gem1.setAttribute('data-row', gem2.getAttribute('data-row'));
       gem1.setAttribute('data-col', gem2.getAttribute('data-col'));
-      gem2.setAttribute('data-row', gem1.dataset.row);
-      gem2.setAttribute('data-col', gem1.dataset.col);
+      gem2.setAttribute('data-row', gem1.getAttribute('data-row'));
+      gem2.setAttribute('data-col', gem1.getAttribute('data-col'));
     }
 
     
