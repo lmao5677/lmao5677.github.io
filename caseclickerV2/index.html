@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <title>Case Clicker Game</title>
+  </head>
+  <body>
+    <h1>Case Clicker Game</h1>
+    <p>Click on the case to earn money!</p>
+    <div id="case">
+      <img src="case.png" alt="case" />
+    </div>
+    <p>Money: <span id="money">0</span></p>
+    <script>
+      // Initialize variables
+      let money = 0;
+
+      // Get reference to the case element and money element
+      const caseElement = document.querySelector("#case");
+      const moneyElement = document.querySelector("#money");
+
+      // Add click event listener to the case
+      caseElement.addEventListener("click", function() {
+        // Increase money by 1 each time the case is clicked
+        money++;
+
+        // Update the money element with the current money amount
+        moneyElement.textContent = money;
+      });
+    </script>
+  </body>
+</html>
