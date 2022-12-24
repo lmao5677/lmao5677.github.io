@@ -2,7 +2,7 @@
 <html>
 <head>
   <style>
-    /* Add some styling for the case and buttons */
+    /* Add some styling for the case, tabs, and buttons */
     .case {
       width: 200px;
       height: 300px;
@@ -14,6 +14,36 @@
     .case img {
       width: 100%;
       height: 100%;
+    }
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    /* Add some styling for the case, tabs, and buttons */
+    .case {
+      width: 200px;
+      height: 300px;
+      background-color: #ccc;
+      float: left;
+      margin-right: 20px;
+    }
+
+    .case img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .tabs {
+      float: right;
+      margin-top: 20px;
+    }
+
+    .tab {
+      display: inline-block;
+      margin-right: 10px;
+      cursor: pointer;
+      padding: 10px;
+      border: 1px solid #333;
     }
 
     .cash-button {
@@ -30,20 +60,26 @@
   </style>
 </head>
 <body>
-  <!-- Add the case image and cost text -->
+  <!-- Add the tabs and case image -->
+  <div class="tabs">
+    <div class="tab">Cases</div>
+    <div class="tab">Upgrades</div>
+    <div class="tab">Inventory</div>
+  </div>
   <div class="case">
     <img src="case.png" alt="Case">
-    <div>Cost: $10</div>
   </div>
 
-  <!-- Add the cash button and earnings text -->
+  <!-- Add the cash button, earnings text, and balance text -->
   <div class="cash-button" onclick="earnMoney()">Cash</div>
   <div id="earnings">Earnings per click: $1</div>
+  <div id="balance">Balance: $0</div>
 
-  <script>
-    // Initialize variables for the cost and earnings
+   <script>
+    // Initialize variables for the cost, earnings, and balance
     let cost = 10;
     let earnings = 1;
+    let balance = 0;
 
     // Function to earn money when the cash button is clicked
     function earnMoney() {
@@ -51,6 +87,8 @@
       if (cost <= 0) {
         // Open the case and reset the cost
         cost = 10;
+        balance += earnings;
+        updateBalance();
         alert("You opened the case and earned $" + earnings + "!");
       } else {
         // Deduct the cost and update the text
@@ -58,6 +96,27 @@
         document.getElementById("earnings").innerHTML = "Cost: $" + cost;
       }
     }
+
+    // Function to update the balance text
+    function updateBalance() {
+      document.getElementById("balance").innerHTML = "Balance: $" + balance;
+    }
+
+    // Save the balance to local storage when the page is unloaded
+    window.addEventListener("beforeunload", function() {
+      localStorage.setItem("balance", balance);
+    });
+
+    // Load the balance from local storage when the page is loaded
+    window.addEventListener("load", function() {
+      balance = localStorage.getItem("balance");
+      if (balance === null) {
+        balance = 0;
+      } else {
+        balance = parseInt(balance);
+      }
+      updateBalance();
+    });
   </script>
 </body>
 </html>
