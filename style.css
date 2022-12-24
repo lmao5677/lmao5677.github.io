@@ -1,0 +1,62 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2em;
+  font-weight: bold;
+  color: #333;
+}
+
+p {
+  font-size: 1.2em;
+  line-height: 1.5;
+  margin: 1em 0;
+  color: #555;
+}
+
+a {
+  color: #00c;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1em;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-underline {
+  text-decoration: underline;
+}
+
+.font-comic-sans {
+  font-family: "Comic Sans MS", sans-serif;
+}
+
+.color-black {
+  color: #000;
+}
+
+.bgm {
+  display: none;
+}
