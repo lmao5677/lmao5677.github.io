@@ -1,42 +1,63 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>Case Clicker Game</title>
-    <style>
-      /* Style for the case image */
-      #case {
-        cursor: pointer; /* Change cursor to a pointer when hovering over the case */
+<head>
+  <style>
+    /* Add some styling for the case and buttons */
+    .case {
+      width: 200px;
+      height: 300px;
+      background-color: #ccc;
+      float: left;
+      margin-right: 20px;
+    }
+
+    .case img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .cash-button {
+      display: block;
+      width: 100px;
+      height: 50px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      line-height: 50px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Add the case image and cost text -->
+  <div class="case">
+    <img src="case.png" alt="Case">
+    <div>Cost: $10</div>
+  </div>
+
+  <!-- Add the cash button and earnings text -->
+  <div class="cash-button" onclick="earnMoney()">Cash</div>
+  <div id="earnings">Earnings per click: $1</div>
+
+  <script>
+    // Initialize variables for the cost and earnings
+    let cost = 10;
+    let earnings = 1;
+
+    // Function to earn money when the cash button is clicked
+    function earnMoney() {
+      // Check if the user has enough money to open the case
+      if (cost <= 0) {
+        // Open the case and reset the cost
+        cost = 10;
+        alert("You opened the case and earned $" + earnings + "!");
+      } else {
+        // Deduct the cost and update the text
+        cost -= earnings;
+        document.getElementById("earnings").innerHTML = "Cost: $" + cost;
       }
-
-      /* Style for the money text */
-      #money {
-        font-weight: bold; /* Make the money text bold */
-        color: green; /* Make the money text green */
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Case Clicker Game</h1>
-    <p>Click on the case to earn money!</p>
-    <div id="case">
-      <img src="case.png" alt="case" />
-    </div>
-    <p>Money: <span id="money">0</span></p>
-    <script>
-      // Initialize variables
-      let money = 0;
-
-      // Get reference to the case element and money element
-      const caseElement = document.querySelector("#case");
-      const moneyElement = document.querySelector("#money");
-
-      // Add click event listener to the case
-      caseElement.addEventListener("click", function() {
-        // Increase money by 1 each time the case is clicked
-        money++;
-
-        // Update the money element with the current money amount
-        moneyElement.textContent = money;
-      });
-    </script>
-  </body>
+    }
+  </script>
+</body>
 </html>
