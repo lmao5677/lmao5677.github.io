@@ -599,6 +599,12 @@ Item_Catalogue[527] = ["quick god"        ,8,21000,18,44,8,0xFF99FF99,10,9   ,1,
 Item_Catalogue[556] = ["charge god"       ,8,22000,18,44,8,0xFF444444,25,3   ,0,10 ,11  ,1 ,1  ,20 ,30 ,60 ,0,6 ,0xFF664422,1,16,16,16,16,0  ,200,200,25,0 ,100,1,0,50 ,0,0  ,800,2,1,40 ,60 ,50 ,1,24,0xFF664422,2,16,64 ,24,24 ,0 ,5 ,25 ,20,0 ,90 ,0,0];
 //   rings    [   ] = [0                  ,1,2    ,3 ,4 ,5,6         ,7 ,8   ,9,10 ,11  ,12,13 ,14 ,15 ,16 ,7,18,19        ,0,21,22,23,24,25 ,26 ,27 ,28,29,30 ,1,2,33 ,4,35 ,36 ,7,8,39 ,40 ,41 ,2,43,44        ,5,46,47 ,48,49 ,50,51,52 ,53,54,55 ,6,7];
 
+//	 bomber bombs
+Item_Catalogue[564]  =  ["bomb",0,100,6,64,9,4473924,0,4,0,2,5,1,80,90,140,70,1,2,4282664004,1,16,16,16,16,0,0,300,10,10,100,0,0,0,0,0,0,1,1,6,10,1,0,2,4294934592,2,32,32,32,32,0,0,20,30,0,100,0,0]
+
+//   cyborg arms
+Item_Catalogue[565]  = ["basic arm"              ,0,100  ,14,13,10,0xFF999999,1 ,3   ,0,2  ,6   ,1 ,30 ,20 ,30 ,60 ,1,17,0xFF999999,1,16,16,8 ,8 ,0  ,0  ,50 ,10,0 ,100,0,0,0  ,0,0  ,0  ,0];//  ,   ,   , ,  ,          , ,  ,   ,  ,   ,  ,  ,   ,  ,  ,   , ,
+
 //   stones   [   ] = [0            ,1,2   ,3,4,5          ,6         ,7          ,8  ,9,10               ,11];
 Item_Catalogue[19]  = ["White Stone",1,400 ,7,6,Class_Compo,0xFFFFFFFF,Stone_White,50 ,0,"LP +50"         ,""];
 Item_Catalogue[84]  = ["White Stone",2,800 ,7,6,Class_Compo,0xFFFFFFFF,Stone_White,100,0,"LP +100"        ,""];
@@ -1458,12 +1464,12 @@ function antiCheatCheck(){ // original name: Ne()
             Game_Canvas = null;
         }
     }
-    for (var s=0; s<Stickmen_Slots<<1; s++){
-        if (Item_Inv[Stickmen_Slots+s]!=0 && Ranger_Class[s]!=getVal(Item_Inv[Stickmen_Slots+s],Item_Class_ID)){
-            console.log("Error: ranger "+(s+1)+" has weapon on wrong class");
-            Game_Canvas = null;
-        }
-    }
+    //for (var s=0; s<Stickmen_Slots<<1; s++){
+       // if (Item_Inv[Stickmen_Slots+s]!=0 && Ranger_Class[s]!=getVal(Item_Inv[Stickmen_Slots+s],Item_Class_ID)){
+        //    console.log("Error: ranger "+(s+1)+" has weapon on wrong class");
+       //     Game_Canvas = null;
+       // }
+   // }
     for (var i=0; i<Stickmen_Slots<<1; i++){
         class_ID = getVal(Item_Inv[Stickmen_Slots+i],Item_Class_ID);
         item_type = getVal(Item_Inv[Stickmen_Slots+i],Item_Type);
@@ -2309,27 +2315,29 @@ function menuAndMap(){ // original name: uf()
         for (var i=0; i<10; i++){ // number of classes
 			var classX = 46;
 			var classY = 170;
+			var seperator = 0;
 			if (i > 7){
-				classX = 120;
+				classX = 60;
 				classY = 220;
+				seperator = 8;
 			}
             Large_Text.TX_spacing = -1;
-            centeredText(Large_Text,classX+60*i,classY,Class_Name_List[i+1],0xCC9449,0x640000);
+            centeredText(Large_Text,classX+60*(i-seperator),classY,Class_Name_List[i+1],0xCC9449,0x640000);
             Large_Text.TX_spacing = 0;
 			
 			
 			
-            if (isMouseHoveredCenter(classX+60*i,classY+20,24,24)){
+            if (isMouseHoveredCenter(classX+60*(i-seperator),classY+20,24,24)){
                 if (Clicked){
                     Ranger_Class[Displayed_Object] = i+1;
-                    Item_Inv[Stickmen_Slots+Displayed_Object] = [3,4,5,6,58,76,188,289][i];
+                    Item_Inv[Stickmen_Slots+Displayed_Object] = [3,4,5,6,58,76,188,289,564,565][i];
                     Comp1_Inv[Stickmen_Slots+Displayed_Object] = 0;
                     Comp2_Inv[Stickmen_Slots+Displayed_Object] = 0;
                 }
-                filledRectCentered(classX+60*i,classY+20,24,24,0x800000); // fill color when hovering over class choices
+                filledRectCentered(classX+60*(i-seperator),classY+20,24,24,0x800000); // fill color when hovering over class choices
             }
-            outlineRectCentered(classX+60*i,classY+20,25,25,0xFFFFFF);
-            dispItemCentered(Player_Img,classX+60*i,classY+20,24,24,24*(i+1),0,24,24,0xFFFFFFFF);
+            outlineRectCentered(classX+60*(i-seperator),classY+20,25,25,0xFFFFFF);
+            dispItemCentered(Player_Img,classX+60*(i-seperator),classY+20,24,24,24*(i+1),0,24,24,0xFFFFFFFF);
         }
 		
 
@@ -4117,6 +4125,26 @@ function setRangersUI(){ // original name: Cf()
                 if (checkEff(Stickmen_Slots+s,Card_Catapt))
                     Range[s] += getEff(Stickmen_Slots+s,Eff1);         // Range (from Catapult's Card)
                 LP_Max[s] = 50+10*LP_SP[s]+4*STR[s]+2*DEX[s]+2*MAG[s]; // LP
+                break;
+			case 9: // bomber
+                AT_Min[s] = wATn+floor(wATn*STR[s]/50);                // Min AT
+                AT_Max[s] = wATx+floor(wATx*STR[s]/50);                // Max AT
+                Agi_Min[s] = maxOf(floor(50*wAGIn/(DEX[s]+50)),5);     // Min AGI
+                Agi_Max[s] = maxOf(floor(50*wAGIx/(DEX[s]+50)),10);    // Max AGI
+                Range[s] = wRnge;                                      // Range (from weapon)
+                if (checkEff(Stickmen_Slots+s,Card_Catapt))
+                    Range[s] += getEff(Stickmen_Slots+s,Eff1);         // Range (from Catapult's Card)
+                LP_Max[s] = 50+8*LP_SP[s]+2*STR[s]+2*DEX[s]+2*MAG[s];  // LP
+                break;
+			case 10: // cyborg
+                AT_Min[s] = wATn+floor(wATn*STR[s]/50);                // Min AT
+                AT_Max[s] = wATx+floor(wATx*STR[s]/50);                // Max AT
+                Agi_Min[s] = maxOf(floor(50*wAGIn/(DEX[s]+50)),5);     // Min AGI
+                Agi_Max[s] = maxOf(floor(50*wAGIx/(DEX[s]+50)),10);    // Max AGI
+                Range[s] = wRnge;                                      // Range (from weapon)
+                if (checkEff(Stickmen_Slots+s,Card_Catapt))
+                    Range[s] += getEff(Stickmen_Slots+s,Eff1);         // Range (from Catapult's Card)
+                LP_Max[s] = 50+8*LP_SP[s]+2*STR[s]+2*DEX[s]+2*MAG[s];  // LP
                 break;
         }
         if (checkEff(Stickmen_Slots+s,Stone_White)) // LP boosting compos
@@ -6015,6 +6043,8 @@ SR_Player.prototype.PLmain = function(){ // Pg.prototype.move
                 case 6: this.Gunner(current_char); break;
                 case 7: this.Whipper(current_char); break;
                 case 8: this.Angel(current_char); break;
+				case 9: this.Bomber(current_char); break;
+				case 10: this.Cyborg(current_char); break;
                 case Class_Dead:
                     pullJoints(this.PL_joint[current_char][1],this.PL_joint[current_char][2] ,3.6,0.5,0.5);
                     pullJoints(this.PL_joint[current_char][3],this.PL_joint[current_char][5] ,4.8,0.5,0.5);
@@ -6651,6 +6681,186 @@ SR_Player.prototype.Gunner = function(current_char){
     pullJoints(this.PL_joint[current_char][7],this.PL_joint[current_char][8] ,6  ,0.1,0.1); // left knee to right knee
 };
 
+// bomber class     original name: va
+window.fff = SR_Player.prototype.Bomber;
+SR_Player.prototype.Bomber = function(current_char){
+    var gnr_target,gnr_is_controlled,gnr_heals_eff;
+    var point_gun = new Vector2D;
+    var gnr_AGI = Agi_Min[current_char]+randInt(Agi_Max[current_char]-Agi_Min[current_char]+1); // set base stats
+    var gnr_range = Range[current_char];
+    var gun_cost = getVal(Item_Inv[Stickmen_Slots+current_char],Weap_MP_Price);
+    var gun_bullet = 1;
+    var gnr_Xpos = (this.PL_joint[current_char][9].x+this.PL_joint[current_char][10].x)>>1; // set position
+    var gnr_Ypos = (this.PL_joint[current_char][9].y+this.PL_joint[current_char][10].y)>>1;
+
+    if (this.PL_is_grounded[current_char]!=0 && this.PL_held_player!=current_char){ // if on the ground and not being held
+        if (this.PL_reload_ticks[current_char] > 0) // if ready to attack
+            this.PL_reload_ticks[current_char]--;   // decrement reload timer
+        if (Game_Mode!=1) // find target
+             gnr_target = Enemies.ENfindEnemy(gnr_Xpos-gnr_range,gnr_Ypos-gnr_range,gnr_Xpos+gnr_range,gnr_Ypos+gnr_range);
+        else gnr_target = Players.PLfindPlayer(gnr_Xpos-gnr_range,gnr_Ypos-gnr_range,gnr_Xpos+gnr_range,gnr_Ypos+gnr_range,getLeader(current_char,1));
+
+        gnr_is_controlled = 0;
+        if (current_char==Selected_Player && (Is_Key_Held[97] || Is_Key_Held[100])){
+            Walk(this,current_char,1);
+            gnr_is_controlled = 1;
+        }
+
+        if (gnr_target!=-1){ // gunner body movement when aiming
+            if (Game_Mode!=1)
+                 point_gun.Vdistance(Enemies.EN_joint[gnr_target][Enemies.EN_center],this.PL_joint[current_char][6]);
+            else point_gun.Vdistance(this.PL_joint[gnr_target][2],this.PL_joint[current_char][6]);
+            normalize(point_gun);
+                // pulls hands toward target so that gunner is pointing gun at target
+            this.PL_joint[current_char][5].x += 0.2*point_gun.x; // move left hand right
+            this.PL_joint[current_char][5].y += 0.2*point_gun.y; // move left hand down
+            this.PL_joint[current_char][6].x += 0.2*point_gun.x; // move right hand right
+            this.PL_joint[current_char][6].y += 0.2*point_gun.y; // move right hand down
+                // counters the pull
+            this.PL_joint[current_char][1].x -= 0.4*point_gun.x; // move neck left
+            this.PL_joint[current_char][1].y -= 0.4*point_gun.y; // move neck up
+
+            if (this.PL_reload_ticks[current_char]==0){       // when ready to attack
+                this.PL_reload_ticks[current_char] = gnr_AGI; // restart reload timer
+                // gunner body movement when attacking (gun recoil)
+                this.PL_joint[current_char][5].y -= 3;         // move left hand up
+                this.PL_joint[current_char][6].y -= 3;         // move right hand up
+                this.PL_joint[current_char][3].y += 3.1;         // move left elbow down
+                this.PL_joint[current_char][4].y += 3.1;         // move right elbow down
+                this.PL_focus[current_char] = 6;                 // set focus point to right hand
+
+                antiCheatCheck();
+                // base attack activation
+                if (Item_Inv[Stickmen_Slots+current_char]==258){                                                                                            // create exception for 3-round burst, because 1 attack = 3 bullets to pay for
+                    gun_bullet = getVal(Item_Inv[Stickmen_Slots+current_char],Item_Bullet);
+                    if (checkEff(Stickmen_Slots+current_char,Card_Bullet))
+                        gun_bullet += getEff(Stickmen_Slots+current_char,Eff1)+floor(gun_bullet*getEff(Stickmen_Slots+current_char,Eff2)/100);
+                }
+                if (gun_cost>0){                                                                                                                            // create exception for starter gun
+                    gun_cost = maxOf(gun_cost-MAG[current_char],1);                                                                                         // set shooting cost after reduction from MAG (minimum of 1)
+                    if (gun_cost*gun_bullet <= Team_Gold){                                                                                                  // if you have enough gold to pay for each bullet
+                        Team_Gold = clamp(Team_Gold-gun_cost*gun_bullet,0,9999999);                                                                         // pay for each bullet
+                        for (var b=0; b<gun_bullet; b++)
+                            Indicators.INadd(this.PL_joint[current_char][6].x,this.PL_joint[current_char][6].y,point_gun.x<0? 0.5 :-0.5,gun_cost,0xFFFF00); // output gold payments
+                        gun_cost = 0;                                                                                                                       // after paying for bullets, set cost to 0
+                    }
+                }
+                if (gun_cost==0){
+                    if (checkEff(Stickmen_Slots+current_char,Card_Heals)){                                                            // gunner Heal's Card
+                        gnr_heals_eff = getEff(Stickmen_Slots+current_char,Eff1);
+                        LP_Current[current_char] = clamp(LP_Current[current_char]+gnr_heals_eff,0,LP_Max[current_char]);              // increase LP
+                        Indicators.INadd(this.PL_joint[current_char][0].x,this.PL_joint[current_char][0].y,0,gnr_heals_eff,0x00FF00); // output LP increase
+                    }
+                    if (this.PL_focus[current_char]!=-1){                                                                                   // when gold for shot has been paid
+                        this.PLprojectileAttack(current_char,this.PL_joint[current_char][6].x,this.PL_joint[current_char][6].y,gnr_target); // perform projectile attack
+                        this.PL_focus[current_char] = -1;                                                                                   // unset focus point
+                    }
+                }
+                antiCheatSet();
+            }
+        } else if ((this.PL_is_grounded[current_char]&3)>0 && gnr_is_controlled!=1){ // if a target is not found
+            Walk(this,current_char,0);
+            Swim(this,current_char);
+        }
+    }
+    pullJoints(this.PL_joint[current_char][0],this.PL_joint[current_char][1] ,3.6,0.5,0.5); // top of head to neck
+    pullJoints(this.PL_joint[current_char][1],this.PL_joint[current_char][2] ,3.6,0.5,0.5); // neck to crotch
+    pullJoints(this.PL_joint[current_char][1],this.PL_joint[current_char][3] ,4.8,0.5,0.5); // neck to left elbow
+    pullJoints(this.PL_joint[current_char][1],this.PL_joint[current_char][4] ,4.8,0.5,0.5); // neck to right elbow
+    pullJoints(this.PL_joint[current_char][3],this.PL_joint[current_char][5] ,4.8,0.5,0.5); // left elbow to left hand
+    pullJoints(this.PL_joint[current_char][4],this.PL_joint[current_char][6] ,4.8,0.5,0.5); // right elbow to right hand
+    pullJoints(this.PL_joint[current_char][5],this.PL_joint[current_char][6] ,1.2,0.5,0.5); // right hand to left hand
+    pullJoints(this.PL_joint[current_char][2],this.PL_joint[current_char][7] ,4.8,0.5,0.5); // crotch to left knee
+    pullJoints(this.PL_joint[current_char][2],this.PL_joint[current_char][8] ,4.8,0.5,0.5); // crotch to right knee
+    pullJoints(this.PL_joint[current_char][7],this.PL_joint[current_char][9] ,4.8,0.5,0.5); // left knee to left foot
+    pullJoints(this.PL_joint[current_char][8],this.PL_joint[current_char][10],4.8,0.5,0.5); // right knee to right foot
+    pullJoints(this.PL_joint[current_char][7],this.PL_joint[current_char][8] ,6  ,0.1,0.1); // left knee to right knee
+};
+
+// cyborg class     original name: va
+window.fff = SR_Player.prototype.Cyborg;
+SR_Player.prototype.Cyborg = function(current_char){
+    var gnr_target,gnr_is_controlled,gnr_heals_eff;
+    var point_gun = new Vector2D;
+    var gnr_AGI = Agi_Min[current_char]+randInt(Agi_Max[current_char]-Agi_Min[current_char]+1); // set base stats
+    var gnr_range = Range[current_char];
+    var gun_cost = 0;
+    var gun_bullet = 1;
+    var gnr_Xpos = (this.PL_joint[current_char][9].x+this.PL_joint[current_char][10].x)>>1; // set position
+    var gnr_Ypos = (this.PL_joint[current_char][9].y+this.PL_joint[current_char][10].y)>>1;
+
+    if (this.PL_is_grounded[current_char]!=0 && this.PL_held_player!=current_char){ // if on the ground and not being held
+        if (this.PL_reload_ticks[current_char] > 0) // if ready to attack
+            this.PL_reload_ticks[current_char]--;   // decrement reload timer
+        if (Game_Mode!=1) // find target
+             gnr_target = Enemies.ENfindEnemy(gnr_Xpos-gnr_range,gnr_Ypos-gnr_range,gnr_Xpos+gnr_range,gnr_Ypos+gnr_range);
+        else gnr_target = Players.PLfindPlayer(gnr_Xpos-gnr_range,gnr_Ypos-gnr_range,gnr_Xpos+gnr_range,gnr_Ypos+gnr_range,getLeader(current_char,1));
+
+        gnr_is_controlled = 0;
+        if (current_char==Selected_Player && (Is_Key_Held[97] || Is_Key_Held[100])){
+            Walk(this,current_char,1);
+            gnr_is_controlled = 1;
+        }
+
+        if (gnr_target!=-1){ // gunner body movement when aiming
+            if (Game_Mode!=1)
+                 point_gun.Vdistance(Enemies.EN_joint[gnr_target][Enemies.EN_center],this.PL_joint[current_char][6]);
+            else point_gun.Vdistance(this.PL_joint[gnr_target][2],this.PL_joint[current_char][6]);
+            normalize(point_gun);
+                // pulls hands toward target so that gunner is pointing gun at target
+            this.PL_joint[current_char][6].x += 0.2*point_gun.x; // move right hand right
+            this.PL_joint[current_char][6].y += 0.2*point_gun.y; // move right hand down
+                // counters the pull
+            this.PL_joint[current_char][1].x -= 0.4*point_gun.x; // move neck left
+            this.PL_joint[current_char][1].y -= 0.4*point_gun.y; // move neck up
+
+            if (this.PL_reload_ticks[current_char]==0){       // when ready to attack
+                this.PL_reload_ticks[current_char] = gnr_AGI; // restart reload timer
+                // gunner body movement when attacking (gun recoil)
+                this.PL_joint[current_char][6].y -= 1.5;         // move right hand up
+                this.PL_joint[current_char][4].y += 1.6;         // move right elbow down
+                this.PL_focus[current_char] = 6;                 // set focus point to right hand
+
+                antiCheatCheck();
+                // base attack activation
+                if (Item_Inv[Stickmen_Slots+current_char]==258){                                                                                            // create exception for 3-round burst, because 1 attack = 3 bullets to pay for
+                    gun_bullet = getVal(Item_Inv[Stickmen_Slots+current_char],Item_Bullet);
+                    if (checkEff(Stickmen_Slots+current_char,Card_Bullet))
+                        gun_bullet += getEff(Stickmen_Slots+current_char,Eff1)+floor(gun_bullet*getEff(Stickmen_Slots+current_char,Eff2)/100);
+                }
+        
+                if (gun_cost==0){
+                    if (checkEff(Stickmen_Slots+current_char,Card_Heals)){                                                            // gunner Heal's Card
+                        gnr_heals_eff = getEff(Stickmen_Slots+current_char,Eff1);
+                        LP_Current[current_char] = clamp(LP_Current[current_char]+gnr_heals_eff,0,LP_Max[current_char]);              // increase LP
+                        Indicators.INadd(this.PL_joint[current_char][0].x,this.PL_joint[current_char][0].y,0,gnr_heals_eff,0x00FF00); // output LP increase
+                    }
+                    if (this.PL_focus[current_char]!=-1){                                                                                   // when gold for shot has been paid
+                        this.PLprojectileAttack(current_char,this.PL_joint[current_char][6].x,this.PL_joint[current_char][6].y,gnr_target); // perform projectile attack
+                        this.PL_focus[current_char] = -1;                                                                                   // unset focus point
+                    }
+                }
+                antiCheatSet();
+            }
+        } else if ((this.PL_is_grounded[current_char]&3)>0 && gnr_is_controlled!=1){ // if a target is not found
+            Walk(this,current_char,0);
+            Swim(this,current_char);
+        }
+    }
+    pullJoints(this.PL_joint[current_char][0],this.PL_joint[current_char][1] ,3.6,0.5,0.5); // top of head to neck
+    pullJoints(this.PL_joint[current_char][1],this.PL_joint[current_char][2] ,3.6,0.5,0.5); // neck to crotch
+    pullJoints(this.PL_joint[current_char][1],this.PL_joint[current_char][3] ,4.8,0.5,0.5); // neck to left elbow
+    pullJoints(this.PL_joint[current_char][1],this.PL_joint[current_char][4] ,4.8,0.5,0.5); // neck to right elbow
+    pullJoints(this.PL_joint[current_char][3],this.PL_joint[current_char][5] ,4.8,0.5,0.5); // left elbow to left hand
+    pullJoints(this.PL_joint[current_char][4],this.PL_joint[current_char][6] ,4.8,0.5,0.5); // right elbow to right hand
+   // pullJoints(this.PL_joint[current_char][5],this.PL_joint[current_char][6] ,1.2,0.5,0.5); // right hand to left hand
+    pullJoints(this.PL_joint[current_char][2],this.PL_joint[current_char][7] ,4.8,0.5,0.5); // crotch to left knee
+    pullJoints(this.PL_joint[current_char][2],this.PL_joint[current_char][8] ,4.8,0.5,0.5); // crotch to right knee
+    pullJoints(this.PL_joint[current_char][7],this.PL_joint[current_char][9] ,4.8,0.5,0.5); // left knee to left foot
+    pullJoints(this.PL_joint[current_char][8],this.PL_joint[current_char][10],4.8,0.5,0.5); // right knee to right foot
+    pullJoints(this.PL_joint[current_char][7],this.PL_joint[current_char][8] ,6  ,0.1,0.1); // left knee to right knee
+};
+
 // whipper class    original name: wa
 window.fff = SR_Player.prototype.Whipper;
 SR_Player.prototype.Whipper = function(current_char){
@@ -7099,6 +7309,7 @@ SR_Player.prototype.PLrenderPlayer = function(){ // Pg.prototype.b
 
             filledRect(floor(this.PL_joint[s][6].x)-1,floor(this.PL_joint[s][6].y)-2,2,4,weap_color); // draw gun
         }
+		
         else if (this.PL_class_ID[s]==7){ // if character is a whipper
             whip_tip_size = 3;
             if (checkEff(Stickmen_Slots+s,Card_Big))
@@ -7129,6 +7340,25 @@ SR_Player.prototype.PLrenderPlayer = function(){ // Pg.prototype.b
                 if (this.PL_ring_thrown_status[s][r]!=0)
                     dispItemCentered(Effect_Img,floor(this.PL_joint[s][15+r].x),floor(this.PL_joint[s][15+r].y),7,3,33,0,7,3,weap_color);
             }
+        }
+		else if (this.PL_class_ID[s]==9){ // if character is a bomber
+		filledRect(floor(this.PL_joint[s][6].x),floor(this.PL_joint[s][6].y),6,4,weap_color);
+        filledRect(floor(this.PL_joint[s][6].x)+1,floor(this.PL_joint[s][6].y)-1,4,6,weap_color);  
+        }
+		else if (this.PL_class_ID[s]==10){ // if character is a cyborg
+            weap_range = clamp(floor(this.PL_joint[s][6].x)-floor(this.PL_joint[s][1].x),-8,8)>>1;
+            // gun angles
+            if (weap_range==-4)      filledRect(floor(this.PL_joint[s][6].x)-5,floor(this.PL_joint[s][6].y),7,3,weap_color);
+            else if (weap_range==-3) filledRect(floor(this.PL_joint[s][6].x)-4,floor(this.PL_joint[s][6].y),6,3,weap_color);
+            else if (weap_range==-2) filledRect(floor(this.PL_joint[s][6].x)-3,floor(this.PL_joint[s][6].y),5,3,weap_color);
+            else if (weap_range==-1) filledRect(floor(this.PL_joint[s][6].x)-2,floor(this.PL_joint[s][6].y),3,3,weap_color);
+            else if (weap_range==0)  filledRect(floor(this.PL_joint[s][6].x)-1,floor(this.PL_joint[s][6].y),2,3,weap_color);
+            else if (weap_range==1)  filledRect(floor(this.PL_joint[s][6].x)-1,floor(this.PL_joint[s][6].y),3,3,weap_color);
+            else if (weap_range==2)  filledRect(floor(this.PL_joint[s][6].x)-2,floor(this.PL_joint[s][6].y),5,3,weap_color);
+            else if (weap_range==3)  filledRect(floor(this.PL_joint[s][6].x)-2,floor(this.PL_joint[s][6].y),6,3,weap_color);
+            else if (weap_range==4)  filledRect(floor(this.PL_joint[s][6].x)-2,floor(this.PL_joint[s][6].y),7,3,weap_color);
+
+           
         }
         if (Sequence_Step!=40){
             if (STR_Aura[s]+DEX_Aura[s] > 0){
