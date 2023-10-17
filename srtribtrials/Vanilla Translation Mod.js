@@ -2303,25 +2303,36 @@ function menuAndMap(){ // original name: uf()
         }
         outlineRectCentered(160+64*Displayed_Object,140,25,25,0xFF0000); // box around stickman slot
 
-        antiCheatCheck();
+       // antiCheatCheck();
 
-        for (var i=0; i<8; i++){ // number of classes
+		
+        for (var i=0; i<10; i++){ // number of classes
+			var classX = 46;
+			var classY = 170;
+			if (i > 7){
+				classX = 120;
+				classY = 220;
+			}
             Large_Text.TX_spacing = -1;
-            centeredText(Large_Text,46+60*i,220,Class_Name_List[i+1],0xCC9449,0x640000);
+            centeredText(Large_Text,classX+60*i,classY,Class_Name_List[i+1],0xCC9449,0x640000);
             Large_Text.TX_spacing = 0;
-
-            if (isMouseHoveredCenter(46+60*i,240,24,24)){
+			
+			
+			
+            if (isMouseHoveredCenter(classX+60*i,classY+20,24,24)){
                 if (Clicked){
                     Ranger_Class[Displayed_Object] = i+1;
                     Item_Inv[Stickmen_Slots+Displayed_Object] = [3,4,5,6,58,76,188,289][i];
                     Comp1_Inv[Stickmen_Slots+Displayed_Object] = 0;
                     Comp2_Inv[Stickmen_Slots+Displayed_Object] = 0;
                 }
-                filledRectCentered(46+60*i,240,24,24,0x800000); // fill color when hovering over class choices
+                filledRectCentered(classX+60*i,classY+20,24,24,0x800000); // fill color when hovering over class choices
             }
-            outlineRectCentered(46+60*i,240,25,25,0xFFFFFF);
-            dispItemCentered(Player_Img,46+60*i,240,24,24,24*(i+1),0,24,24,0xFFFFFFFF);
+            outlineRectCentered(classX+60*i,classY+20,25,25,0xFFFFFF);
+            dispItemCentered(Player_Img,classX+60*i,classY+20,24,24,24*(i+1),0,24,24,0xFFFFFFFF);
         }
+		
+
 
         if (Ranger_Class[0]!=0 && Ranger_Class[1]!=0 && Ranger_Class[2]!=0 && Ranger_Class[3]!=0){
             centeredText(Large_Text,464,300,"Start",0xFFFFFF,0x996633);
