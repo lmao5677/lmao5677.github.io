@@ -600,10 +600,10 @@ Item_Catalogue[556] = ["charge god"       ,8,22000,18,44,8,0xFF444444,25,3   ,0,
 //   rings    [   ] = [0                  ,1,2    ,3 ,4 ,5,6         ,7 ,8   ,9,10 ,11  ,12,13 ,14 ,15 ,16 ,7,18,19        ,0,21,22,23,24,25 ,26 ,27 ,28,29,30 ,1,2,33 ,4,35 ,36 ,7,8,39 ,40 ,41 ,2,43,44        ,5,46,47 ,48,49 ,50,51,52 ,53,54,55 ,6,7];
 
 //	 bomber bombs
-Item_Catalogue[564]  =  ["bomb",0,100,6,64,9,4473924,0,4,0,2,5,1,80,90,140,70,1,2,4282664004,1,16,16,16,16,0,0,300,10,10,100,0,0,0,0,0,0,1,1,6,10,1,0,2,4294934592,2,32,32,32,32,0,0,20,30,0,100,0,0]
+Item_Catalogue[564]  =  ["bomb",0,100,20,64,9,4473924,0,4,0,2,5,1,80,90,140,70,1,2,4282664004,1,16,16,16,16,0,0,300,10,10,100,0,0,0,0,0,0,1,1,6,10,1,0,2,4294934592,2,32,32,32,32,0,0,20,30,0,100,0,0]
 
 //   cyborg arms
-Item_Catalogue[565]  = ["basic arm"              ,0,100  ,14,13,10,0xFF999999,1 ,3   ,0,2  ,6   ,1 ,30 ,20 ,30 ,60 ,1,17,0xFF999999,1,16,16,8 ,8 ,0  ,0  ,50 ,10,0 ,100,0,0,0  ,0,0  ,0  ,0];//  ,   ,   , ,  ,          , ,  ,   ,  ,   ,  ,  ,   ,  ,  ,   , ,
+Item_Catalogue[565]  = ["basic arm"              ,0,100  ,21,65,10,0xFF999999,1 ,3   ,0,2  ,3   ,1 ,30 ,15 ,20 ,60 ,1,17,0xFF999999,1,16,16,8 ,8 ,0  ,0  ,50 ,10,0 ,100,0,0,0  ,0,0  ,0  ,0];//  ,   ,   , ,  ,          , ,  ,   ,  ,   ,  ,  ,   ,  ,  ,   , ,
 
 //   stones   [   ] = [0            ,1,2   ,3,4,5          ,6         ,7          ,8  ,9,10               ,11];
 Item_Catalogue[19]  = ["White Stone",1,400 ,7,6,Class_Compo,0xFFFFFFFF,Stone_White,50 ,0,"LP +50"         ,""];
@@ -3691,7 +3691,7 @@ function PvPscreens(){ // original name: xf()
             filledRect(b+32*s,c-12,floor(24*LP_Current[s]/LP_Max[s]),4,0x800000); // player LP Bar display in vs mode
             mp_price = maxOf(getVal(Item_Inv[Stickmen_Slots+s],Weap_MP_Price),1);
             item_class = getVal(Item_Inv[Stickmen_Slots+s],Item_Class_ID);
-            if (item_class!=4 && item_class!=5 && item_class!=6) // don't draw MP bar for non MP users
+            if (item_class!=4 && item_class!=5 && item_class!=6 && item_class != 9) // don't draw MP bar for non MP users
                 filledRect(b+32*s,c-6,floor(23*MP_Bar[s]/mp_price)+1,2,0x000080); // player MP bar display in vs mode
             filledRect(b+32*s,c+0,24,24,0x000000);
             dispItem(Player_Img,b+32*s,c,24,24,24*getVal(Item_Inv[Stickmen_Slots+s],Item_Class_ID),0,24,24,0xFFFFFFFF);
@@ -4312,6 +4312,7 @@ function rangerSPupIndicators(ranger,stat){
             case 4: Indicators.INadd(Players.PL_joint[Selected_Player][0].x,Players.PL_joint[Selected_Player][0].y,0,"AT+",0xFFFF0000); break;
             case 5: Indicators.INadd(Players.PL_joint[Selected_Player][0].x,Players.PL_joint[Selected_Player][0].y,0,"RANGE+",0xFF00FFFF); break;
             case 6: Indicators.INadd(Players.PL_joint[Selected_Player][0].x,Players.PL_joint[Selected_Player][0].y,0,"COST-",0xFFFFFF00); break;
+			case 9: Indicators.INadd(Players.PL_joint[Selected_Player][0].x,Players.PL_joint[Selected_Player][0].y,0,"COST-",0xFFFFFF00); break;
         }
     }
 }
@@ -4543,7 +4544,7 @@ function drawUI(UI_mode){ // original name: Jf()
                 Large_Text.TXoutputB(L,T+56,"Type: "+type_desc,type_color,0x000000);
                 Large_Text.TXoutputB(L,T+68,"AT "+bat_MIN+"-"+bat_MAX,type_color,0x000000);
 
-                if (item_class==6)
+                if (item_class==6 || item_class == 9)
                     Large_Text.TXoutputB(L,T+80,"$$ "+MP_price,0xFFFF00,0x000000);
                 else if (MP_price>0)
                     Large_Text.TXoutputB(L,T+80,"MP "+MP_price,0x6666FF,0x000000);
@@ -4591,7 +4592,7 @@ function drawUI(UI_mode){ // original name: Jf()
 
         MP_price = maxOf(getVal(Item_Inv[Stickmen_Slots+s],Weap_MP_Price),1);
         item_class = getVal(Item_Inv[Stickmen_Slots+s],Item_Class_ID);
-        if (item_class!=4 && item_class!=5 && item_class!=6) // don't draw MP bar for non MP users
+        if (item_class!=4 && item_class!=5 && item_class!=6 && item_class!= 9) // don't draw MP bar for non MP users
             filledRect(L+32*s,T-6,floor(23*MP_Bar[s]/MP_price)+1,2,0x000080); // MP bar
         if (item_class==2 && getVal(Item_Inv[Stickmen_Slots+s],41)>50){ // output energy bar for activated swords
             r = 255-floor(Players.PL_gladr_resid_count[s]/getVal(Item_Inv[Stickmen_Slots+s],41)*255);
