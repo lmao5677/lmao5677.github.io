@@ -107,6 +107,8 @@ var Map_Feature_Index = new SR_Image;       // feature index                   o
 var Map_Features_Img = new SR_Image;        // tree/castle/cave image          original name: lb
 var Sequence_Step = 0;                      // game sequence                   original name: f
 var Text_Fade = 0;                          // fadeout timer                   original name: mb
+var Rage_Amnt = 0; 							// Rage Amount/Progress
+var Rage_Active = false;					// Is Rage Active?
 var Current_Stage = 0;                      // ID of stage                     original name: h
 var Current_Screen = 0;                     // current screen in stage         original name: nb
 var Sign_Touched_Mode = 0;    // 0:sign not hit 1:NEXT sign hit 2:MAP sign hit original name: sb
@@ -454,6 +456,7 @@ Item_Catalogue[523] = ["pyroclastic flow" ,8,21000,6 ,26,4,0xFFFF4400,1 ,4   ,0,
 Item_Catalogue[552] = ["thunderbolt"      ,8,22000,6 ,26,4,0xFFFFFF33,2 ,3   ,0,0  ,0   ,1 ,30 ,120,135,90 ,0,2 ,0xFFFFFF66,2,16,16,4 ,4 ,0  ,0  ,200,10,0 ,100,0,0,0  ,3,0  ,0  ,1,1,1  ,999,1  ,0,18,0xFFFFFF66,2,64,512,64,512,0 ,20,50 ,10,0 ,100,0,0];
 //    orbs    [   ] = [0                  ,1,2    ,3 ,4 ,5,6         ,7 ,8   ,9,10 ,11  ,12,13 ,14 ,15 ,16 ,7,18,19        ,0,21,22,23,24,25 ,26 ,27 ,28,29,30 ,1,2,33 ,4,35 ,36 ,7,8,39 ,40 ,41 ,2,43,44        ,5,46,47 ,48,49 ,50,51,52 ,53,54,55 ,6,7];
 //   staffs   [   ] = [0                  ,1,2    ,3 ,4 ,5,6         ,7 ,8   ,9,10 ,11  ,12,13 ,14 ,15 ,16 ,7,18,19        ,0,21,22,23,24,25 ,26 ,27 ,28,29,30 ,1,2,33 ,4,35 ,36 ,7,8,39 ,40 ,41 ,2,43,44        ,5,46,47 ,48,49 ,50,51,52 ,53,54,55 ,6,7];
+Item_Catalogue[566] = ["wither staff",0,100  ,12,11,5,3552822,1 ,6   ,0,1  ,2   ,1 ,0  ,80 ,90 ,70 ,0,15,4287006342,2,24,24,24,24,0  ,0  ,100,40,0 ,100,0,0,0  ,6,100  ,0  ,0,0,0,0,0,0,0,4294967295,1,16,16,16,16,0,0,0,10,0,100,0,0]
 Item_Catalogue[58]  = ["staff"            ,0,100  ,12,11,5,0xFF9900FF,1 ,6   ,0,1  ,2   ,1 ,0  ,80 ,90 ,70 ,0,15,0xFFCC99FF,2,24,24,24,24,0  ,0  ,100,40,0 ,100,0,0,0  ,0,0  ,0  ,0];//  ,   ,   , ,  ,          , ,  ,   ,  ,   ,  ,  ,   ,  ,  ,   , ,
 Item_Catalogue[60]  = ["staff of wood"    ,1,250  ,12,11,5,0xFF884400,1 ,6   ,0,2  ,3   ,1 ,0  ,80 ,90 ,70 ,0,15,0xFF996633,2,24,24,24,24,0  ,0  ,100,40,0 ,100,0,0,0  ,0,0  ,0  ,0];//  ,   ,   , ,  ,          , ,  ,   ,  ,   ,  ,  ,   ,  ,  ,   , ,
 Item_Catalogue[61]  = ["long staff"       ,1,500  ,12,11,5,0xFFAAAAAA,1 ,6   ,0,3  ,4   ,1 ,0  ,80 ,90 ,110,0,15,0xFFAAAAAA,2,24,24,24,24,0  ,0  ,100,40,0 ,100,0,0,0  ,0,0  ,0  ,0];//  ,   ,   , ,  ,          , ,  ,   ,  ,   ,  ,  ,   ,  ,  ,   , ,
@@ -2330,7 +2333,7 @@ function menuAndMap(){ // original name: uf()
             if (isMouseHoveredCenter(classX+60*(i-seperator),classY+20,24,24)){
                 if (Clicked){
                     Ranger_Class[Displayed_Object] = i+1;
-                    Item_Inv[Stickmen_Slots+Displayed_Object] = [3,4,5,6,58,76,188,289,564,565][i];
+                    Item_Inv[Stickmen_Slots+Displayed_Object] = [3,4,5,6,566,76,188,289,564,565][i];
                     Comp1_Inv[Stickmen_Slots+Displayed_Object] = 0;
                     Comp2_Inv[Stickmen_Slots+Displayed_Object] = 0;
                 }
@@ -2448,6 +2451,8 @@ function menuAndMap(){ // original name: uf()
         Current_Screen = 0;
         Sequence_Step = 6;
     } else if (Sequence_Step==6){                                                     // Sequence: World Map
+		Rage_Active = false; // Reset rage when swapping to other stages.
+		Rage_Amnt = 0;
         DPSM_Calculator.CLreset(1);
         WorldMap.MAPmain();
         drawUI(2);
@@ -2553,6 +2558,7 @@ function PvEscreens(){ // original name: vf()
     } else if (Sequence_Step==11){                                                    // Sequence: fade in screen (including splash text for first screen and boss screen)
         drawStage(0);
         drawUI(0);
+		
         DPSM_Calculator.CLoutputStats();
         r = 30;
         screen_intro_text1 = "";
@@ -2589,7 +2595,7 @@ function PvEscreens(){ // original name: vf()
         drawStage(0);
         drawUI(0);
         DPSM_Calculator.CLoutputStats();
-
+		
         if (LP_Current[0]+LP_Current[1]+LP_Current[2]+LP_Current[3] == 0){ // if team is dead
             Text_Fade = 0;
             Sequence_Step = 30;
@@ -2608,7 +2614,21 @@ function PvEscreens(){ // original name: vf()
             if (Clicked)
                 Sequence_Step = 6;
             Large_Text.TXoutputB(Win_Width-4-70-6,8,"World Map",0xFF0000,0x000000); // World Map button (red highlight while in normal stages)
-        }
+        } else if (isMouseHovered(6,28,118,14)){
+			if (Rage_Active == false && Rage_Amnt >= 100)
+			{
+				Large_Text.TXoutputB(30,30,"Activate",0xFFFFFF,0x000000); // Activate Rage
+			}
+			else if (Rage_Active == true || Rage_Amnt < 100)
+			{
+				Large_Text.TXoutputB(30,30,"Activate",0x888888,0x000000); // Activate Rage (Grey)
+			}
+			
+			if (Clicked && Rage_Active == false && Rage_Amnt >= 100)
+			{
+				Rage_Active = true;
+			}
+		}
     } else if (Sequence_Step==13){                                                    // Sequence: fade out screen after touching sign
         drawStage(0);
         drawUI(0);
@@ -3004,6 +3024,7 @@ function townScreens(){ // original name: wf()
                 case 3: type_desc = "Thunder", type_color = 0xEDED00; break;  // yellow
                 case 4: type_desc = "Poison", type_color = 0x00FE00; break;   // green
                 case 5: type_desc = "Freeze", type_color = 0xCBCBFE; break;   // light blue
+				case 6: type_desc = "Wither", type_color = 0x1C1C1C; break;   // dark grey
             }
             Large_Text.TXoutputB(shop_left+8,shop_top+80,"Type: "+type_desc,type_color,0x000000);
             Large_Text.TXoutputB(shop_left+8,shop_top+92,"AT "+BAT_min+"-"+BAT_max,type_color,0x000000);
@@ -3013,7 +3034,7 @@ function townScreens(){ // original name: wf()
             else if (MP_price>0)
                 Large_Text.TXoutputB(shop_left+8,shop_top+104,"MP "+MP_price,0x6666FF,0x000000); // only display MP if there is a MP cost
 
-            if (type==1 || type==4 || type==5){
+            if (type==1 || type==4 || type==5 || type == 6){
                 if (type==1){
                     if (getVal(shop_item,Item_Res_Mode)!=0) // if there IS a residue mode, fire time = residue lifespan
                          type_para = getVal(shop_item,Res_Lifespan);
@@ -3737,6 +3758,11 @@ function drawStage(is_paused){ // original name: Tf()
         Drops.DPmain();
         Indicators.INmain();
         Projectiles.PJmain();
+		if (Rage_Active)
+		{
+			Rage_Amnt = clamp(Rage_Amnt-0.1,0,100);
+			if (Rage_Amnt == 0) Rage_Active = false;
+		}
     }
 
     // signs loading after all enemies killed (gauntlet style or no?)
@@ -3971,7 +3997,12 @@ function drawStage(is_paused){ // original name: Tf()
     filledRect(Win_Width-80-4,4,80,20,0x80404040);
     Display_Mode = 0;
     Large_Text.TXoutputB(Win_Width-4-70-6,8,"World Map",0xFFFFFF,0x000000); // Word Map button (white default text)
-
+	
+	filledRect(6,28,(Rage_Amnt/100)*118,14,0x30FF0000);
+	outlineRectCentered(65,35,120,15,0xFFFFFF);
+    centeredText(Large_Text,65,55,"RAGE",0xFFFFFF,0xFF0000);
+	
+	
     if (En_Count_From_Max>0){
         if (is_paused==0)
             En_Count_From_Max--;
@@ -4540,6 +4571,7 @@ function drawUI(UI_mode){ // original name: Jf()
                     case 3: type_desc = "Thunder", type_color = 0xEDED00; break;  // yellow
                     case 4: type_desc = "Poison", type_color = 0x00FE00; break;   // green
                     case 5: type_desc = "Freeze", type_color = 0xCBCBFE; break;   // light blue
+					case 6: type_desc = "Wither", type_color = 0x1C1C1C; break; // dark grey
                 }
                 Large_Text.TXoutputB(L,T+56,"Type: "+type_desc,type_color,0x000000);
                 Large_Text.TXoutputB(L,T+68,"AT "+bat_MIN+"-"+bat_MAX,type_color,0x000000);
@@ -4560,7 +4592,7 @@ function drawUI(UI_mode){ // original name: Jf()
                     Large_Text.TXoutputB(L,T+80,indent_space+"Time "+fire_duration/50+"s",type_color,0x000000); // display fire duration
                 } else if (type==2){
                     Large_Text.TXoutputB(L,T+80,indent_space+"Slow "+type_param+"%",type_color,0x000000);    // display slow %
-                } else if (type==4 || type==5){
+                } else if (type==4 || type==5 || type == 6){
                     Large_Text.TXoutputB(L,T+80,indent_space+"Time "+type_param/50+"s",type_color,0x000000); // display poison and freeze durations
                 }
 
@@ -6011,6 +6043,7 @@ SR_Player.prototype.PLmain = function(){ // Pg.prototype.move
             }
             if (LP_Current[current_char]==0 && this.PL_class_ID[current_char]!=Class_Dead){
                 this.PL_class_ID[current_char] = Class_Dead;
+				Rage_Amnt = clamp(Rage_Amnt+5,0,100);
                 for (var j=0; j<11; j++){
                     this.PL_joint[current_char][j].x += randomRange(-2,2);
                     this.PL_joint[current_char][j].y += randomRange(-1,-3);
@@ -6113,6 +6146,8 @@ SR_Player.prototype.Boxer = function(current_char){
     if (this.PL_is_grounded[current_char]!=0 && this.PL_held_player!=current_char){ // if on the ground and not being held
         if (this.PL_reload_ticks[current_char] > 0) // if ready to attack
             this.PL_reload_ticks[current_char]--;   // decrement reload timer
+			if (Rage_Active) this.PL_reload_ticks[current_char]--; // decrease again for rage
+			if (this.PL_reload_ticks[current_char] < 0) this.PL_reload_ticks[current_char] = 0; // hopefully fixes things.
         if (Game_Mode!=1) // find target
               box_target = Enemies.ENfindEnemy(box_Xpos-box_range,box_Ypos-box_range,box_Xpos+box_range,box_Ypos);
         else  box_target = Players.PLfindPlayer(box_Xpos-box_range,box_Ypos-box_range,box_Xpos+box_range,box_Ypos,getLeader(current_char,1));
@@ -6258,6 +6293,8 @@ SR_Player.prototype.Gladiator = function(current_char){
     if (this.PL_is_grounded[current_char]!=0 && this.PL_held_player!=current_char){ // if on the ground and not being held
         if (this.PL_reload_ticks[current_char] > 0) // if ready to attack
             this.PL_reload_ticks[current_char]--;   // decrement reload timer
+			if (Rage_Active) this.PL_reload_ticks[current_char]--; // decrease again for rage
+			if (this.PL_reload_ticks[current_char] < 0) this.PL_reload_ticks[current_char] = 0; // hopefully fixes things.
         if (Game_Mode!=1) // find target
              gla_target = Enemies.ENfindEnemy(gla_Xpos-gla_range,gla_Ypos-gla_range,gla_Xpos+gla_range,gla_Ypos);
         else gla_target = Players.PLfindPlayer(gla_Xpos-gla_range,gla_Ypos-gla_range,gla_Xpos+gla_range,gla_Ypos,getLeader(current_char,1));
@@ -6382,6 +6419,8 @@ SR_Player.prototype.Sniper = function(current_char){
     if (this.PL_is_grounded[current_char]!=0 && this.PL_held_player!=current_char){ // if on the ground and not being held
         if (this.PL_reload_ticks[current_char] > 0) // if ready to attack
             this.PL_reload_ticks[current_char]--;   // decrement reload timer
+			if (Rage_Active) this.PL_reload_ticks[current_char]--; // decrease again for rage
+			if (this.PL_reload_ticks[current_char] < 0) this.PL_reload_ticks[current_char] = 0; // hopefully fixes things.
         if (Game_Mode!=1) // find target
              snp_target = Enemies.ENfindEnemy(snp_Xpos-snp_range,snp_Ypos-snp_range,snp_Xpos+snp_range,snp_Ypos+snp_range);
         else snp_target = Players.PLfindPlayer(snp_Xpos-snp_range,snp_Ypos-snp_range,snp_Xpos+snp_range,snp_Ypos+snp_range,getLeader(current_char,1));
@@ -6453,6 +6492,8 @@ SR_Player.prototype.Magician = function(current_char){
     if (this.PL_is_grounded[current_char]!=0 && this.PL_held_player!=current_char){ // if on the ground and not being held
         if (this.PL_reload_ticks[current_char] > 0) // if ready to attack
             this.PL_reload_ticks[current_char]--;   // decrement reload timer
+			if (Rage_Active) this.PL_reload_ticks[current_char]--; // decrease again for rage
+			if (this.PL_reload_ticks[current_char] < 0) this.PL_reload_ticks[current_char] = 0; // hopefully fixes things.
         if (Game_Mode!=1) // find target
              mgi_target = Enemies.ENfindEnemy(mgi_Xpos-mgi_range,mgi_Ypos-mgi_range,mgi_Xpos+mgi_range,mgi_Ypos+mgi_range);
         else mgi_target = Players.PLfindPlayer(mgi_Xpos-mgi_range,mgi_Ypos-mgi_range,mgi_Xpos+mgi_range,mgi_Ypos+mgi_range,getLeader(current_char,1));
@@ -6526,6 +6567,8 @@ SR_Player.prototype.Priest = function(current_char){
     if (this.PL_is_grounded[current_char]!=0 && this.PL_held_player!=current_char){ // if on the ground and not being held
         if (this.PL_reload_ticks[current_char] > 0) // if ready to attack
             this.PL_reload_ticks[current_char]--;   // decrement reload timer
+			if (Rage_Active) this.PL_reload_ticks[current_char]--; // decrease again for rage
+			if (this.PL_reload_ticks[current_char] < 0) this.PL_reload_ticks[current_char] = 0; // hopefully fixes things.
         if (Game_Mode!=1) // find target
              pri_target = Enemies.ENfindEnemy(pri_Xpos-pri_range,pri_Ypos-(pri_range>>1),pri_Xpos+pri_range,pri_Ypos+(pri_range>>1)); // vertical Range is 1/2 for priest
         else pri_target = Players.PLfindPlayer(pri_Xpos-pri_range,pri_Ypos-(pri_range>>1),pri_Xpos+pri_range,pri_Ypos+(pri_range>>1),getLeader(current_char,1));
@@ -6601,6 +6644,8 @@ SR_Player.prototype.Gunner = function(current_char){
     if (this.PL_is_grounded[current_char]!=0 && this.PL_held_player!=current_char){ // if on the ground and not being held
         if (this.PL_reload_ticks[current_char] > 0) // if ready to attack
             this.PL_reload_ticks[current_char]--;   // decrement reload timer
+			if (Rage_Active) this.PL_reload_ticks[current_char]--; // decrease again for rage
+			if (this.PL_reload_ticks[current_char] < 0) this.PL_reload_ticks[current_char] = 0; // hopefully fixes things.
         if (Game_Mode!=1) // find target
              gnr_target = Enemies.ENfindEnemy(gnr_Xpos-gnr_range,gnr_Ypos-gnr_range,gnr_Xpos+gnr_range,gnr_Ypos+gnr_range);
         else gnr_target = Players.PLfindPlayer(gnr_Xpos-gnr_range,gnr_Ypos-gnr_range,gnr_Xpos+gnr_range,gnr_Ypos+gnr_range,getLeader(current_char,1));
@@ -6697,6 +6742,8 @@ SR_Player.prototype.Bomber = function(current_char){
     if (this.PL_is_grounded[current_char]!=0 && this.PL_held_player!=current_char){ // if on the ground and not being held
         if (this.PL_reload_ticks[current_char] > 0) // if ready to attack
             this.PL_reload_ticks[current_char]--;   // decrement reload timer
+			if (Rage_Active) this.PL_reload_ticks[current_char]--; // decrease again for rage
+			if (this.PL_reload_ticks[current_char] < 0) this.PL_reload_ticks[current_char] = 0; // hopefully fixes things.
         if (Game_Mode!=1) // find target
              gnr_target = Enemies.ENfindEnemy(gnr_Xpos-gnr_range,gnr_Ypos-gnr_range,gnr_Xpos+gnr_range,gnr_Ypos+gnr_range);
         else gnr_target = Players.PLfindPlayer(gnr_Xpos-gnr_range,gnr_Ypos-gnr_range,gnr_Xpos+gnr_range,gnr_Ypos+gnr_range,getLeader(current_char,1));
@@ -6793,6 +6840,8 @@ SR_Player.prototype.Cyborg = function(current_char){
     if (this.PL_is_grounded[current_char]!=0 && this.PL_held_player!=current_char){ // if on the ground and not being held
         if (this.PL_reload_ticks[current_char] > 0) // if ready to attack
             this.PL_reload_ticks[current_char]--;   // decrement reload timer
+			if (Rage_Active) this.PL_reload_ticks[current_char]--; // decrease again for rage
+			if (this.PL_reload_ticks[current_char] < 0) this.PL_reload_ticks[current_char] = 0; // hopefully fixes things.
         if (Game_Mode!=1) // find target
              gnr_target = Enemies.ENfindEnemy(gnr_Xpos-gnr_range,gnr_Ypos-gnr_range,gnr_Xpos+gnr_range,gnr_Ypos+gnr_range);
         else gnr_target = Players.PLfindPlayer(gnr_Xpos-gnr_range,gnr_Ypos-gnr_range,gnr_Xpos+gnr_range,gnr_Ypos+gnr_range,getLeader(current_char,1));
@@ -6881,6 +6930,8 @@ SR_Player.prototype.Whipper = function(current_char){
     if (this.PL_is_grounded[current_char]!=0 && this.PL_held_player!=current_char){ // if on the ground and not being held
         if (this.PL_reload_ticks[current_char] > 0) // if ready to attack
             this.PL_reload_ticks[current_char]--;   // decrement reload timer
+			if (Rage_Active) this.PL_reload_ticks[current_char]--; // decrease again for rage
+			if (this.PL_reload_ticks[current_char] < 0) this.PL_reload_ticks[current_char] = 0; // hopefully fixes things.
         if (Game_Mode!=1) // find target
              wpr_target = Enemies.ENfindEnemy(wpr_Xpos-wpr_range,wpr_Ypos-wpr_range-20,wpr_Xpos+wpr_range,wpr_Ypos+20);
         else wpr_target = Players.PLfindPlayer(wpr_Xpos-wpr_range,wpr_Ypos-wpr_range-20,wpr_Xpos+wpr_range,wpr_Ypos+20,getLeader(current_char,1));
@@ -7040,6 +7091,8 @@ SR_Player.prototype.Angel = function(current_char){
     if (this.PL_is_grounded[current_char]!=0 && this.PL_held_player!=current_char){ // if on the ground and not being held
         if (this.PL_reload_ticks[current_char] > 0) // if ready to attack
             this.PL_reload_ticks[current_char]--;   // decrement reload timer
+			if (Rage_Active) this.PL_reload_ticks[current_char]--; // decrease again for rage
+			if (this.PL_reload_ticks[current_char] < 0) this.PL_reload_ticks[current_char] = 0; // hopefully fixes things.
         if (Game_Mode!=1) // find target
              ang_target = Enemies.ENfindEnemy(ang_Xpos-ang_range,ang_Ypos-ang_range,ang_Xpos+ang_range,ang_Ypos+ang_range);
         else ang_target = Players.PLfindPlayer(ang_Xpos-ang_range,ang_Ypos-ang_range,ang_Xpos+ang_range,ang_Ypos+ang_range,getLeader(current_char,1));
@@ -7186,6 +7239,10 @@ SR_Player.prototype.PLrenderPlayer = function(){ // Pg.prototype.b
             head_color = 0x339900;
             body_color = 0x33FF00;
         }
+		if (Rage_Active) {							 // color when ENRAGED
+			 head_color = 0xE31010;
+			 body_color = 0xE33D10;
+		}
         if (this.PL_damaged_ticks[s]>0){             // color when taking hits
             this.PL_damaged_ticks[s]--;
             body_color = 0xFF0000;
@@ -7406,6 +7463,7 @@ var En_2nd_Att = 60; // 2nd attack switch   original name: Re
 var EN_EXP = 61;     // enemy experience    original name: ng
 var En_Gold = 62;    // enemy gold dropped  original name: mg
 var En_Drop1 = 63;   // enemy drop #1       original name: og
+var Wi_Resist = 69;  // wither resist
 var EN_Info = [      // enemy arrays        original name: B[]
   //[0 ,1 ,2 ,3,4       ,5       ,6     ,7    ,8,9 ,10        ,1,12,13,14,15,16 ,17 ,18  ,19,20,21 ,2,3,24 ,5,26  ,27  ,28,29  ,30 ,31  ,32  ,3,34  ,35   ,36  ,37  ,38  ,39  ,40 ,1,2,43,44        ,5,46,47 ,48,49 ,50  ,51,52,53 ,4,5,6,57,58  ,59,0,61   ,62  ,63 ,64 ,65 ,66 ,67 ,68 ],
 // Opening Street       ,        ,      ,     , ,  ,          , ,  ,  ,  ,  ,   ,   ,    ,  ,  ,   , , ,   , ,    ,    ,  ,    ,   ,    ,    , ,    ,     ,    ,    ,    ,    ,   , , ,  ,          , ,  ,   ,  ,   ,    ,  ,  ,   , , , ,  ,    ,  , ,     ,    ,   ,   ,   ,   ,   ,   ], Opening Street
@@ -8278,6 +8336,7 @@ function SR_Enemy(){ // original name: hh()
     this.EN_poison_dmg = new Int32Array(EN_arr_size);    // damage of poison                         original name: .H
     this.EN_DPSM_poisoner = new Int32Array(EN_arr_size); // ranger how last poisoned enemy            (DPS mod var)
     this.EN_frozen_ticks = new Int32Array(EN_arr_size);  // duration of freeze                       original name: .B
+	this.EN_wither_ticks = new Int32Array(EN_arr_size);  // duration of wither                       
     this.EN_index_total = 0;                             // cumulative count                         original name: .rr
     this.EN_center = 20;                                 // center of body                           original name: .n
     for (var i=0; i<EN_arr_size; i++){
@@ -8320,6 +8379,7 @@ SR_Enemy.prototype.ENadd = function(x_pos,y_pos,ID){ // aa.add
         this.EN_poison_ticks[this.EN_index_current] = 0;
         this.EN_poison_dmg[this.EN_index_current] = 0;
         this.EN_frozen_ticks[this.EN_index_current] = 0;
+		this.EN_wither_ticks[this.EN_index_current] = 0;
         this.EN_index_current++;
         this.EN_index_total++;
     }
@@ -8345,6 +8405,7 @@ SR_Enemy.prototype.ENkill = function(a){ // aa.sub
     this.EN_poison_dmg[a] = this.EN_poison_dmg[this.EN_index_current-1];
     this.EN_DPSM_poisoner[a] = this.EN_DPSM_poisoner[this.EN_index_current-1];
     this.EN_frozen_ticks[a] = this.EN_frozen_ticks[this.EN_index_current-1];
+	this.EN_wither_ticks[a] = this.EN_wither_ticks[this.EN_index_current-1];
     this.EN_index_current--;
 };
 
@@ -8431,13 +8492,25 @@ SR_Enemy.prototype.ENtakeDamage = function(attacker,splash,type,type_parameter,A
         species = EN_Info[this.EN_array_ID[e]][EN_Species];
         hurtbox_width = (Hitboxvar1[species]>>1)*((hurtbox_height>>1)+1);
         hurtbox_height *= Hitboxvar2[species]>>1;
+		var RageAdd = 0.4;
 
         if (is_critical == true)
+		{
              indicr_color = 0xFFC0C0; // critical highlight
-        else indicr_color = 0xC0C0C0; // color of enemy indicators
+			 RageAdd = 1;
+		}
+        else 
+		{
+			indicr_color = 0xC0C0C0; // color of enemy indicators
+		}
+
+		
 
         if (this.EN_health[e]>0 && this.EN_joint[e][this.EN_center].x-hurtbox_width <= x_pos+hitbox_width && this.EN_joint[e][this.EN_center].x+hurtbox_width >= x_pos-hitbox_width && this.EN_joint[e][this.EN_center].y-hurtbox_height <= y_pos+hitbox_height && this.EN_joint[e][this.EN_center].y+hurtbox_height >= y_pos-hitbox_height){
             en_damage = ATmin+floor(random(ATmax-ATmin+1));
+			if (Rage_Active) en_damage = floor(en_damage*1.5);
+			if (this.EN_wither_ticks[e] > 0)
+				en_damage = floor(en_damage*1.5);
             if (type==4){ // poison attack
                 this.EN_poison_ticks[e] = type_parameter-floor(type_parameter*EN_Info[this.EN_array_ID[e]][Po_Resist]/100);
                 this.EN_poison_dmg[e] = en_damage;
@@ -8453,6 +8526,12 @@ SR_Enemy.prototype.ENtakeDamage = function(attacker,splash,type,type_parameter,A
                     en_damage = maxOf(1,en_damage-floor(en_damage*EN_Info[this.EN_array_ID[e]][Ic_Resist]/100));
                 if (type==3) // thunder damage
                     en_damage = maxOf(1,en_damage-floor(en_damage*EN_Info[this.EN_array_ID[e]][Th_Resist]/100));
+				if (type==6) // wither damage
+				{
+					var witherResist = 0;
+					if (typeof(EN_Info[this.EN_array_ID[e]][Wi_Resist]) != "undefined") witherResist = EN_Info[this.EN_array_ID[e]][Wi_Resist];
+					en_damage = maxOf(1,en_damage-floor(en_damage*witherResist/100));
+				}
 
                 if ((Sett_Dmg_Indicators&1)==0)
                     Indicators.INadd(this.EN_joint[e][this.EN_center].x,this.EN_joint[e][this.EN_center].y-hurtbox_height,1,en_damage,indicr_color);
@@ -8465,6 +8544,10 @@ SR_Enemy.prototype.ENtakeDamage = function(attacker,splash,type,type_parameter,A
             }
             if (type==5) // freeze stop
                 this.EN_frozen_ticks[e] = type_parameter-floor(type_parameter*EN_Info[this.EN_array_ID[e]][Fr_Resist]/100);
+			if (type==6) // withering
+				var witherResist = 0;
+				if (typeof(EN_Info[this.EN_array_ID[e]][Wi_Resist]) != "undefined") witherResist = EN_Info[this.EN_array_ID[e]][Wi_Resist];
+				this.EN_wither_ticks[e] = type_parameter-floor(type_parameter*witherResist/100);
 
             DPSM_Calculator.CL_dmg_session[attacker] += minOf(this.EN_health[e],en_damage);
             DPSM_Calculator.CL_DPS_session[attacker] += minOf(this.EN_health[e],en_damage);
@@ -8474,13 +8557,14 @@ SR_Enemy.prototype.ENtakeDamage = function(attacker,splash,type,type_parameter,A
                 DPSM_Calculator.CL_dmg[i][attacker] += minOf(this.EN_health[e],en_damage);
 
             this.EN_health[e] = maxOf(this.EN_health[e]-en_damage,0);
+			if (Rage_Active == false) Rage_Amnt = clamp(Rage_Amnt+RageAdd,0,100);
             target_ID = e;
             Players.PL_dmg_dealt[attacker] += en_damage;
             Target_HP_Current = this.EN_health[e];
             Target_HP_Max = EN_Info[this.EN_array_ID[e]][EN_LP];
             En_Count_From_Max = 100;
             Target_Array_ID = this.EN_array_ID[e];
-
+			
             if (splash==0)
                 break;
         }
@@ -8807,6 +8891,8 @@ SR_Enemy.prototype.ENmain = function(){ // original name: hh.prototype.move
         else {
             this.EN_DPSM_poisoner[current_en] = -1; // unset poisoner
         }
+		if (this.EN_wither_ticks[current_en]>0 && this.EN_health[current_en]>0)
+            this.EN_wither_ticks[current_en]--;
         if (this.EN_frozen_ticks[current_en]>0 && this.EN_health[current_en]>0){
             this.EN_frozen_ticks[current_en]--;
         } else {
@@ -10403,7 +10489,10 @@ SR_Enemy.prototype.ENrenderEnemy = function(){ // hh.prototype.b()
         } else if (this.EN_poison_ticks[i]>0){
             head_color = 0x33FF00; // light green
             body_color = 0x339900; // dark green
-        }
+        } else if (this.EN_wither_ticks[i]>0){
+			head_color = 0x333333; // dark gray
+			body_color = 0x1C1C1C; // darker gray
+		}
         limb_size = (150-this.EN_piece_size[i])/150*en_size;
 
         switch (this.EN_species_ID[i]){
